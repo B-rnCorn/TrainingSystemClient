@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# e2e
+/e2e/src/app.e2e-spec.ts
+/e2e/src/app.po.ts
+/e2e/protractor.conf.js
+/e2e/tsconfig.json
