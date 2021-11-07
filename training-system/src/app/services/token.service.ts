@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CONSTANTS} from "../constants/utils";
 
 @Injectable({
@@ -6,7 +6,9 @@ import {CONSTANTS} from "../constants/utils";
 })
 export class TokenService {
   private roles: Array<string> = [];
-  constructor() { }
+
+  constructor() {
+  }
 
   signOut() {
     window.sessionStorage.clear();
@@ -26,7 +28,16 @@ export class TokenService {
     window.sessionStorage.setItem(CONSTANTS.USERNAME_KEY, username);
   }
 
-  public getUsername(): string | null{
+  public saveTokenType(type: string) {
+    window.sessionStorage.removeItem(CONSTANTS.TOKEN_TYPE_KEY);
+    window.sessionStorage.setItem(CONSTANTS.TOKEN_TYPE_KEY, type);
+  }
+
+  public getTokenType(): string | null {
+    return sessionStorage.getItem(CONSTANTS.TOKEN_TYPE_KEY);
+  }
+
+  public getUsername(): string | null {
     return sessionStorage.getItem(CONSTANTS.USERNAME_KEY);
   }
 

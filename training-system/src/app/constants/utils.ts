@@ -1,12 +1,13 @@
 export class CONSTANTS{
   static ROLES = {
-    anonymous: '0',
-    student: '1',
-    teacher: '2',
+    anonymous: 'ROLE_ANON',
+    student: 'ROLE_STUDENT',
+    teacher: 'ROLE_TEACHER',
   }
   static EMPTY = 'EMPTY ID'
   static TOKEN_KEY = 'AuthToken';
   static USERNAME_KEY = 'AuthUsername';
   static AUTHORITIES_KEY = 'AuthAuthorities';
   static TOKEN_HEADER_KEY = 'Authorization';
+  static TOKEN_TYPE_KEY = 'AuthTokenType';
 }

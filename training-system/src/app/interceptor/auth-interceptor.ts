@@ -7,18 +7,19 @@ import {CONSTANTS} from "../constants/utils";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private token: TokenService) { }
+  constructor(private tokenService: TokenService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authReq = req;
-    const token = this.token.getToken();
+    const token = this.tokenService.getToken();
+    const tokenType = this.tokenService.getTokenType();
     if (token != null) {
-      authReq = req.clone({ headers: req.headers.set(CONSTANTS.TOKEN_HEADER_KEY, token) });
+      authReq = req.clone({headers: req.headers.set(CONSTANTS.TOKEN_HEADER_KEY, tokenType + ' ' + token)});
     }
     return next.handle(authReq);
   }
 }
 
-export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-];
+export const HttpInterceptorProvider =
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true};

@@ -18,6 +18,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpInterceptorProvider} from "./interceptor/auth-interceptor";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [HttpClient],
+  providers: [HttpClient,HttpInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {

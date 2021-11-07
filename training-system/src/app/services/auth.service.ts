@@ -18,12 +18,13 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: User): Observable<AuthUser> {
-    return this.http.post<AuthUser>(API.LOGIN, credentials, httpOptions);
+  login(userData: User): Observable<any> {
+    let user = AuthService.convertUserForLogin(userData)
+    return this.http.post<AuthUser>(API.LOGIN, user, httpOptions);
   }
 
-  register(userInfo: User): Observable<string> {
-    let user = AuthService.convertUserForRegistration(userInfo);
+  register(userData: User): Observable<string> {
+    let user = AuthService.convertUserForRegistration(userData);
     return this.http.post<string>(API.REGISTER, user, httpOptions);
   }
 
@@ -34,6 +35,13 @@ export class AuthService {
       password: user.password,
       fio: user.name,
       role: 'student'
+    }
+  }
+
+  private static convertUserForLogin(user: User): any {
+    return {
+      username: user.login,
+      password: user.password,
     }
   }
 }
