@@ -12,14 +12,19 @@ import {CONSTANTS} from "../../../constants/utils";
 export class RegisterComponent implements OnInit {
 
   _registrationForm: FormGroup = new FormGroup({
-    "name": new FormControl(),
-    "surname": new FormControl(),
-    "patronymic": new FormControl(),
+    "name": new FormControl("",
+      [Validators.required]),
+    "surname": new FormControl("",
+      [Validators.required]),
+    "patronymic": new FormControl("",
+      [Validators.required]),
     "email": new FormControl("",
       [Validators.required,
       Validators.email]),
-    "password": new FormControl(),
-    "secondPassword": new FormControl(),
+    "password": new FormControl("",
+      [Validators.required]),
+    "secondPassword": new FormControl("",
+      [Validators.required]),
   });
 
   _choosedRole: string = CONSTANTS.ROLES.student;
@@ -63,7 +68,7 @@ export class RegisterComponent implements OnInit {
 
   //TODO: Вынестив отдельный сервис
   private static preprocessName(name: string, surname: string, patronymic: string): string{
-    return name + ' ' + surname + ' ' + patronymic
+    return surname + ' ' + name + ' ' + patronymic
   }
 
 
