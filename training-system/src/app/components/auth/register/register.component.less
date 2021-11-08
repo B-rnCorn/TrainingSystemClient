@@ -1,3 +1,7 @@
+input {
+  border-radius: 20px;
+}
+
 .register-layout {
   padding-top: 50px;
   display: flex;
@@ -5,35 +9,46 @@
   justify-content: center;
 
   .form-placeholder {
+
     flex-direction: column;
     display: flex;
     padding: 50px;
     background-color: #F5F5F5;
-    width: 500px;
+    width: 450px;
     border-radius: 50px;
     justify-content: center;
+    margin-bottom: 50px;
 
     .register-form {
+
       .form-layout {
         display: flex;
         flex-direction: column;
-        max-width: 500px;
+        max-width: 450px;
+        font-family: 'Montserrat Alternates', sans-serif;
+
+        .example-full-width {
+          border-width: 100px;
+        }
       }
 
       &_toggle-wrapper {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
+
       }
 
       &_toggle {
-        margin: 20px;
+        margin: 0 20px 15px;
       }
     }
 
     .register-header {
       text-align: center;
+      font-family: 'Montserrat Alternates', sans-serif;
     }
+
   }
 }
 

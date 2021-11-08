@@ -29,11 +29,11 @@
           <input type="password" matInput placeholder="Повторите пароль" formControlName="secondPassword">
         </mat-form-field>
         <div class="register-form_toggle-wrapper">
-          <div></div>
-          <div><mat-slide-toggle class="register-form_toggle" (change)="onChangeRole($event)">Учитель</mat-slide-toggle></div>
-          <div></div>
+          <div>Я ученик</div>
+          <div><mat-slide-toggle class="register-form_toggle" (change)="onChangeRole($event)"></mat-slide-toggle></div>
+          <div>Я учитель</div>
         </div>
-        <button mat-raised-button color="primary" type="submit">Зарегистрироваться</button>
+        <button mat-raised-button color="primary" type="submit" style="width: 65%; height:50px;align-self: center">Зарегистрироваться</button>
       </div>
     </form>
   </div>

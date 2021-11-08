@@ -4,7 +4,7 @@ import {User} from "../models/user";
 import {Observable} from "rxjs";
 import {AuthUser} from "../models/authUser";
 import {CONSTANTS} from "../constants/utils";
-import {API} from "../constants/API";
+import {API} from '../constants/API';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
