@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../models/user";
 import {AuthService} from "../../../services/auth.service";
 import {CONSTANTS} from "../../../constants/utils";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -13,14 +14,14 @@ export class RegisterComponent implements OnInit {
 
   _registrationForm: FormGroup = new FormGroup({
     "name": new FormControl("",
-      [Validators.required]),
+      [Validators.required/*, Validators.pattern(/[a-zA-Z]+/g)*/]),
     "surname": new FormControl("",
       [Validators.required]),
     "patronymic": new FormControl("",
       [Validators.required]),
     "email": new FormControl("",
       [Validators.required,
-        Validators.email]),
+        /*Validators.email*/]),
     "password": new FormControl("",
       [Validators.required]),
     "secondPassword": new FormControl("",
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
   private user: any;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -65,7 +66,8 @@ export class RegisterComponent implements OnInit {
       //TODO: выводить сообщение с бэка
       let subscription = this.authService.register(this.user).subscribe(res => {
         subscription.unsubscribe();
-      })
+        this.router.navigate(['login']);
+      });
     }
   }
 

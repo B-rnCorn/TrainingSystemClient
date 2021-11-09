@@ -10,4 +10,10 @@ export class CONSTANTS{
   static AUTHORITIES_KEY = 'AuthAuthorities';
   static TOKEN_HEADER_KEY = 'Authorization';
   static TOKEN_TYPE_KEY = 'AuthTokenType';
+
+  static TABS = {
+    login: 'login',
+    register: 'register',
+    tasks: 'tasks',
+  }
 }

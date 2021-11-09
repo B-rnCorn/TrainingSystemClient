@@ -34,7 +34,7 @@ export class AuthService {
       username: user.login,
       password: user.password,
       fio: user.name,
-      role: 'student'
+      role: user.role,
     }
   }
 

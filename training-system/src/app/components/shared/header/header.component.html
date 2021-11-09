@@ -1,0 +1,33 @@
+<!--Кейс регистрации-->
+<mat-toolbar *ngIf="currentTab === 'register' || currentTab ===''">
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>computer</mat-icon>
+  </button>
+  <span class="example-spacer"></span>
+  <span class="example-spacer"></span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+          (click)="navigate('login')"
+  >
+    <span class="mat-h1 enter">Вход</span>
+  </button>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+<!--Кейс логина-->
+<mat-toolbar *ngIf="currentTab === 'login'">
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>computer</mat-icon>
+  </button>
+  <span class="example-spacer"></span>
+  <span class="example-spacer"></span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+          (click)="navigate('register')"
+  >
+    <span class="mat-h1 enter">Регистрация</span>
+  </button>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+
