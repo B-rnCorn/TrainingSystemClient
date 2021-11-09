@@ -8,6 +8,7 @@ import {TokenService} from "../../../services/token.service";
 import {AuthUser} from "../../../models/authUser";
 import {API} from "../../../constants/API";
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
   private user: any;
   private loggedUser: any;
 
-  constructor(private authService: AuthService, private tokenService: TokenService) {
+  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -52,6 +53,7 @@ export class LoginComponent implements OnInit {
         this.tokenService.saveUsername(res.username);
         this.tokenService.saveTokenType(res.type);
         subscription.unsubscribe();
+        this.router.navigate(['tasks']);
       })
     }
   }

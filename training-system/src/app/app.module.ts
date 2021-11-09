@@ -20,6 +20,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorProvider} from "./interceptor/auth-interceptor";
 import { NotificationComponent } from './components/shared/notification/notification.component';
+import {TasksModule} from "./components/tasks/tasks.module";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,10 @@ import { NotificationComponent } from './components/shared/notification/notifica
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [HttpClient,HttpInterceptorProvider],
+  providers: [HttpClient, HttpInterceptorProvider],
+  exports: [
+    HeaderComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

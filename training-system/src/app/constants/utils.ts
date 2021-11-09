@@ -15,5 +15,7 @@ export class CONSTANTS{
     login: 'login',
     register: 'register',
     tasks: 'tasks',
+    info: 'info',
+    marks: 'marks',
   }
 }
