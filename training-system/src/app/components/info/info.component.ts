@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info.component.less']
 })
 export class InfoComponent implements OnInit {
-
+  active = 1;
   constructor() { }
 
   ngOnInit(): void {

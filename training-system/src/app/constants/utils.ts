@@ -17,5 +17,6 @@ export class CONSTANTS{
     tasks: 'tasks',
     info: 'info',
     marks: 'marks',
-  }
+    journal: 'journal'
+  };
 }

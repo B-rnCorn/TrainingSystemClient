@@ -21,6 +21,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorProvider} from "./interceptor/auth-interceptor";
 import { NotificationComponent } from './components/shared/notification/notification.component';
 import {TasksModule} from "./components/tasks/tasks.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {TasksModule} from "./components/tasks/tasks.module";
     MatSlideToggleModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule
   ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [

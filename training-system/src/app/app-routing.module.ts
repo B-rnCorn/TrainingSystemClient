@@ -6,6 +6,7 @@ import {CONSTANTS} from "./constants/utils";
 import {TasksComponent} from "./components/tasks/tasks.component";
 import {InfoComponent} from "./components/info/info.component";
 import {MarksComponent} from "./components/marks/marks.component";
+import {JournalComponent} from "./components/journal/journal.component";
 
 const routes: Routes = [
   { path: CONSTANTS.TABS.register, component: RegisterComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: CONSTANTS.TABS.tasks, component: TasksComponent },
   { path: CONSTANTS.TABS.info, component: InfoComponent },
   { path: CONSTANTS.TABS.marks, component: MarksComponent },
+  { path: CONSTANTS.TABS.journal, component: JournalComponent },
   { path: '', component: RegisterComponent},
 ];
 

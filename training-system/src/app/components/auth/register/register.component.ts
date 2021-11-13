@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
       return*/
       console.log(this._registrationForm.value);
       this.user = new User(
-        RegisterComponent.preprocessName(this._registrationForm.value['name'], this._registrationForm.value['surname'], this._registrationForm.value['patronymic']),
+        RegisterComponent.preprocessName(this._registrationForm.value['surname'], this._registrationForm.value['name'], this._registrationForm.value['patronymic']),
         this._registrationForm.value['email'],
         this._registrationForm.value['password'],
         this._choosedRole,
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
 
   //TODO: Вынестив отдельный сервис
   private static preprocessName(name: string, surname: string, patronymic: string): string {
-    return surname + ' ' + name + ' ' + patronymic
+    return surname + ' ' + name + ' ' + patronymic;
   }
 
 
