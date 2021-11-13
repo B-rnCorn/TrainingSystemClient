@@ -1,1 +1,65 @@
-<p>journal works!</p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<app-header
+  [currentTab]="'other'"
+>
+</app-header>
+<br>
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <li [ngbNavItem]="1">
+    <a ngbNavLink>Группа</a>
+    <ng-template ngbNavContent >
+      <br>
+      <div class="d-flex justify-content-center">
+        <div class="row col-md-8 col-md-offset-2 ">
+          <table class="table table-striped ">
+            <thead class="thead">
+            <tr>
+              <th>Имя</th>
+              <th>Логин</th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of studentsInGroup">
+              <td>{{user.fio}}</td>
+              <td>{{user.username}}</td>
+              <td class="text-center"><button class="btn btn-info btn-xs" ><span class="glyphicon glyphicon-remove"></span> Статистика</button></td>
+              <td class="text-center"><button class="btn btn-danger btn-xs" (click)="deleteUser(user.username)"><span class="glyphicon glyphicon-remove"></span> Удалить</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2">
+    <a ngbNavLink>Добавить</a>
+    <ng-template ngbNavContent>
+      <br>
+      <div class="d-flex justify-content-center">
+        <div class="row col-md-8 col-md-offset-2 ">
+          <table class="table table-striped ">
+            <thead class="thead-success">
+            <tr>
+              <th>Имя</th>
+              <th>Логин</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of allStudents">
+              <td>{{user.fio}}</td>
+              <td>{{user.username}}</td>
+              <td class="text-center"><button class="btn btn btn-success btn-xs" (click)="addStudentToGroup(user.username)"><span class="glyphicon glyphicon-remove"></span>Добавить</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

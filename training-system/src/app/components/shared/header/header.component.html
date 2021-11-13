@@ -44,11 +44,18 @@
     <span class="mat-h1 enter">Задания</span>
   </button>
   </span>
-  <span class="example-spacer">
+  <span *ngIf="roles.includes('ROLE_STUDENT')" class="example-spacer">
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
             (click)="navigate('marks')"
     >
     <span class="mat-h1 enter">Оценки</span>
+  </button>
+  </span>
+  <span *ngIf="roles.includes('ROLE_TEACHER')" class="example-spacer">
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="navigate('journal')"
+    >
+    <span class="mat-h1 enter">Журнал</span>
   </button>
   </span>
   <span class="example-spacer">
