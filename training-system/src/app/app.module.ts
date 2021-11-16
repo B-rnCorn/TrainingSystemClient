@@ -16,12 +16,15 @@ import {HeaderComponent} from './components/shared/header/header.component';
 import {MatInputModule} from "@angular/material/input";
 import {LayoutModule} from '@angular/cdk/layout';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorProvider} from "./interceptor/auth-interceptor";
 import { NotificationComponent } from './components/shared/notification/notification.component';
 import {TasksModule} from "./components/tasks/tasks.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {MatDialogModule} from "@angular/material/dialog";
+import {DialogComponent} from "./components/dialog/dialog.component";
+
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     JournalComponent,
     MarksComponent,
     HeaderComponent,
-    NotificationComponent
+    NotificationComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     MatSlideToggleModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [

@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UserDto} from "../models/userDto";
+import {MessageResponse} from "../models/messageResponse";
 
 
 @Injectable({
@@ -23,12 +24,12 @@ export class UserService {
     return this.http.get<UserDto>(this.studentsAllUrl);
   }
 
-  public deleteStudentWithoutGroup(username: string): Observable<any> {
+  public deleteStudentWithoutGroup(username: string): Observable<MessageResponse> {
     return this.http
-      .delete(this.deleteStudentWithoutGroupUrl, {params: new HttpParams().append('username', username)});
+      .delete<MessageResponse>(this.deleteStudentWithoutGroupUrl, {params: new HttpParams().append('username', username)});
   }
-  public addUserToGroup(username: string): Observable<any> {
+  public addUserToGroup(username: string): Observable<MessageResponse> {
     return this.
-    http.get(this.addUserToGroupUrl, { params: new HttpParams().append('username', username)});
+    http.get<MessageResponse>(this.addUserToGroupUrl, { params: new HttpParams().append('username', username)});
   }
 }

@@ -1,9 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../models/user";
 import {AuthService} from "../../../services/auth.service";
 import {CONSTANTS} from "../../../constants/utils";
 import {Router} from "@angular/router";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {DialogComponent, DialogData} from "../../dialog/dialog.component";
+import {min} from "rxjs/operators";
+
 
 @Component({
   selector: 'app-register',
@@ -11,19 +15,24 @@ import {Router} from "@angular/router";
   styleUrls: ['./register.component.less']
 })
 export class RegisterComponent implements OnInit {
+  message: string;
+
+  public setMessage(message: any) {
+    this.message = message;
+  }
 
   _registrationForm: FormGroup = new FormGroup({
     "name": new FormControl("",
-      [Validators.required/*, Validators.pattern(/[a-zA-Z]+/g)*/]),
+      [Validators.required, Validators.maxLength(21)/*, Validators.pattern(/[a-zA-Z]+/g)*/]),
     "surname": new FormControl("",
-      [Validators.required]),
+      [Validators.required, Validators.maxLength(21)]),
     "patronymic": new FormControl("",
-      [Validators.required]),
+      Validators.maxLength(21)),
     "email": new FormControl("",
       [Validators.required,
-        /*Validators.email*/]),
+        Validators.minLength(4), Validators.maxLength(16)]),
     "password": new FormControl("",
-      [Validators.required]),
+      [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
     "secondPassword": new FormControl("",
       [Validators.required]),
   });
@@ -32,7 +41,7 @@ export class RegisterComponent implements OnInit {
 
   private user: any;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -63,18 +72,33 @@ export class RegisterComponent implements OnInit {
         CONSTANTS.EMPTY
       )
       console.log(this.user);
-      //TODO: выводить сообщение с бэка
-      let subscription = this.authService.register(this.user).subscribe(res => {
-        subscription.unsubscribe();
-        this.router.navigate(['login']);
-      });
+      let subscription = this.authService.register(this.user).subscribe(
+        data => {
+          this.message = data.message;
+          subscription.unsubscribe();
+          this.openDialog({message: this.message});
+
+          this.router.navigate(['login']);
+        },
+        error => {
+          this.message = error.error.message;
+          subscription.unsubscribe();
+          const dialogRef = this.openDialog({message: this.message});
+        });
+      console.log(this.message);
     }
   }
 
   //TODO: Вынестив отдельный сервис
-  private static preprocessName(name: string, surname: string, patronymic: string): string {
+  private static preprocessName(surname: string, name: string, patronymic: string): string {
     return surname + ' ' + name + ' ' + patronymic;
   }
 
-
+  //TODO:  в отдельный файл
+  public openDialog(data: DialogData): MatDialogRef<DialogComponent> {
+    return this.dialog.open(DialogComponent, {
+      data,
+    });
+  }
 }
+

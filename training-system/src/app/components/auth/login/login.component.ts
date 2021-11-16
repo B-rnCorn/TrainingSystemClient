@@ -9,6 +9,8 @@ import {AuthUser} from "../../../models/authUser";
 import {API} from "../../../constants/API";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {DialogComponent, DialogData} from "../../dialog/dialog.component";
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
+
+  message: string;
 
   _loginForm: FormGroup = new FormGroup({
     "email": new FormControl("",
@@ -28,7 +32,7 @@ export class LoginComponent implements OnInit {
   private user: any;
   private loggedUser: any;
 
-  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router) {
+  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -54,8 +58,18 @@ export class LoginComponent implements OnInit {
         this.tokenService.saveTokenType(res.type);
         subscription.unsubscribe();
         this.router.navigate(['tasks']);
-      })
+      },
+        error => {
+          this.message = 'Ошибка: Проверьте введенные данные';
+          subscription.unsubscribe();
+          this.openDialog({message: this.message});
+        })
     }
   }
-
+  //TODO:  в отдельный файл
+  public openDialog(data: DialogData): MatDialogRef<DialogComponent> {
+    return this.dialog.open(DialogComponent, {
+      data,
+    });
+  }
 }

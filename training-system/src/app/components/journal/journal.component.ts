@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {UserDto} from "../../models/userDto";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {DialogComponent, DialogData} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-journal',
@@ -13,9 +15,10 @@ export class JournalComponent implements OnInit {
   active = 1;
   studentsInGroup: UserDto[] = [];
   allStudents: UserDto[] = [];
+  message: string;
 
   constructor(private userService: UserService,
-              private router: Router) {}
+              private router: Router, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getUserInGroup();
@@ -24,7 +27,9 @@ export class JournalComponent implements OnInit {
 
   public deleteUser(username: string): any{
     this.userService.deleteStudentWithoutGroup(username)
-      .subscribe(() => {
+      .subscribe((data) => {
+        this.message = data.message;
+        this.openDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
       });
@@ -40,10 +45,18 @@ export class JournalComponent implements OnInit {
   }
   public addStudentToGroup(username: string): any {
     this.userService.addUserToGroup(username)
-      .subscribe(() => {
+      .subscribe((data) => {
+        this.message = data.message;
+        this.openDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
       });
   }
 
+  //TODO:  в отдельный файл
+  public openDialog(data: DialogData): MatDialogRef<DialogComponent> {
+    return this.dialog.open(DialogComponent, {
+      data,
+    });
+  }
 }

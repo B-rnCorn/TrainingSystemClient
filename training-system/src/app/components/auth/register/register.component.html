@@ -6,9 +6,10 @@
     <h1 class="mat-h1 register-header">Регистрация</h1>
     <form [formGroup]="_registrationForm" class="register-form" (ngSubmit)="onSubmit($event)">
       <div class="form-layout">
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="fill" >
           <mat-label>Имя</mat-label>
           <input matInput placeholder="Введите имя" formControlName="name">
+
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Фамилия</mat-label>
@@ -20,11 +21,11 @@
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Логин</mat-label>
-          <input matInput placeholder="Введите логин" formControlName="email">
+          <input matInput placeholder="Введите логин (4-16 символов)" formControlName="email">
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Пароль</mat-label>
-          <input type="password" matInput placeholder="Введите пароль" formControlName="password">
+          <input type="password" matInput placeholder="Введите пароль (6-16 символов)" formControlName="password">
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Повторите пароль</mat-label>
