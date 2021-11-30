@@ -9,16 +9,24 @@
         <mat-form-field class="example-full-width" appearance="fill" >
           <mat-label>Имя</mat-label>
           <input matInput placeholder="Введите имя" formControlName="name">
-
         </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['name']" class="mat-error">
+          {{_formErrorsMessages['name']}}
+        </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Фамилия</mat-label>
           <input matInput placeholder="Введите фамилию" formControlName="surname">
         </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['surname']" class="mat-error">
+          {{_formErrorsMessages['surname']}}
+        </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Отчество</mat-label>
           <input matInput placeholder="Введите отчество" formControlName="patronymic">
         </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['patronymic']" class="mat-error">
+          {{_formErrorsMessages['patronymic']}}
+        </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Логин</mat-label>
           <input matInput placeholder="Введите логин (4-16 символов)" formControlName="email">

@@ -1,1 +1,61 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <p>task-solution works!</p>
+<div class="example-container">
+  <h2>КОМАНДЫ</h2>
+
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="example-list"
+    (cdkDropListDropped)="dropCommandToCommandsList($event)">
+    <div class="example-box" *ngFor="let item of todo" cdkDrag>
+      <div *ngIf="item === 'ВПЕРЕД' || item === 'НАЗАД'" style="background-color: dodgerblue">{{item}}</div>
+      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'" style="background-color: limegreen">{{item}}</div>
+      <div *ngIf="item === 'ПРЫЖОК'" style="background-color: blueviolet">{{item}}</div>
+      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange">{{item}}</div>
+      <!--//TODO:ПОПРОБОВАТЬ ЦИКОЛ ЧЕРЕЗ ДРАГ ЭНД ДРОП СПИСОК, ОНКЛИК, И ПЕРЕМЕННУЮ ДЛЯ CONNECTED TO-->
+    </div>
+  </div>
+</div>
+
+<div class="example-container">
+  <h2>СКРИПТ</h2>
+
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="done"
+    [cdkDropListConnectedTo]="[todoList]"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+    (cdkDropListExited)="dropOutside($event)">
+    <div class="example-box" *ngFor="let item of done" cdkDrag>
+      <div *ngIf="item === 'ВПЕРЕД' || item === 'НАЗАД'" style="background-color: dodgerblue">{{item}}</div>
+      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'" style="background-color: limegreen">{{item}}</div>
+      <div *ngIf="item === 'ПРЫЖОК'" style="background-color: blueviolet">{{item}}</div>
+      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange">{{item}}</div>
+    </div>
+  </div>
+</div>
+<div class="field-container">
+  <h2>ИГРОВОЕ ПОЛЕ</h2>
+  <div class="container-md">
+    <div class="row zero-spacing" *ngFor="let row of matrix; index as i">
+      <div class="col-md-1 zero-spacing" *ngFor="let column of row; index as j">
+        <div class="field-cell zero-spacing">
+          {{i}}{{j}}
+        </div>
+        <!--<ng-container *ngTemplateOutlet="fieldItem">
+        </ng-container>-->
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #fieldItem>
+  <div class="field-cell">
+    БАНАН
+  </div>
+</ng-template>

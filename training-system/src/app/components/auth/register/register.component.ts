@@ -16,6 +16,7 @@ import {min} from "rxjs/operators";
 })
 export class RegisterComponent implements OnInit {
   message: string;
+  _formErrorsMessages: any;
 
   public setMessage(message: any) {
     this.message = message;
@@ -34,8 +35,16 @@ export class RegisterComponent implements OnInit {
     "password": new FormControl("",
       [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
     "secondPassword": new FormControl("",
-      [Validators.required]),
+      [Validators.required,]),
   });
+
+  userNameValidator(control: FormControl): {[s:string]:boolean}|null{
+
+    if(control.value==="нет"){
+      return {"userName": true};
+    }
+    return null;
+  }
 
   _choosedRole: string = CONSTANTS.ROLES.student;
 
@@ -86,6 +95,30 @@ export class RegisterComponent implements OnInit {
           const dialogRef = this.openDialog({message: this.message});
         });
       console.log(this.message);
+    } else {
+      //TODO: разбить на методы
+      this._formErrorsMessages = {
+        'name': '',
+        "surname": '',
+        "patronymic": '',
+        "email": '',
+        "password": '',
+      };
+      if (this._registrationForm.get('name')?.errors && this._registrationForm.get('name')?.hasError('maxlength')) {
+        this._formErrorsMessages['name'] += 'Максимальное количество символов для имени:' +
+          this._registrationForm.get('name')?.errors?.maxlength?.requiredLength + ', вы ввели:' +
+          this._registrationForm.get('name')?.errors?.maxlength?.actualLength;
+      }
+      if (this._registrationForm.get('surname')?.errors && this._registrationForm.get('surname')?.hasError('maxlength')) {
+        this._formErrorsMessages['surname'] += 'Максимальное количество символов для фамилии:' +
+          this._registrationForm.get('surname')?.errors?.maxlength?.requiredLength + ', вы ввели:' +
+          this._registrationForm.get('surname')?.errors?.maxlength?.actualLength;
+      }
+      if (this._registrationForm.get('patronymic')?.errors && this._registrationForm.get('patronymic')?.hasError('maxlength')) {
+        this._formErrorsMessages['patronymic'] += 'Максимальное количество символов для отчество:' +
+          this._registrationForm.get('patronymic')?.errors?.maxlength?.requiredLength + ', вы ввели:' +
+          this._registrationForm.get('patronymic')?.errors?.maxlength?.actualLength;
+      }
     }
   }
 

@@ -9,22 +9,21 @@ import {InfoComponent} from './components/info/info.component';
 import {JournalComponent} from './components/journal/journal.component';
 import {MarksComponent} from './components/marks/marks.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 import {HeaderComponent} from './components/shared/header/header.component';
-import {MatInputModule} from "@angular/material/input";
+import {MatInputModule} from '@angular/material/input';
 import {LayoutModule} from '@angular/cdk/layout';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorProvider} from "./interceptor/auth-interceptor";
 import { NotificationComponent } from './components/shared/notification/notification.component';
-import {TasksModule} from "./components/tasks/tasks.module";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {MatDialogModule} from "@angular/material/dialog";
+import {NgbModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 import {DialogComponent} from "./components/dialog/dialog.component";
-
+import {MatDialogModule} from "@angular/material/dialog";
+import {TasksModule} from "./components/tasks/tasks.module";
 
 @NgModule({
   declarations: [
@@ -52,11 +51,10 @@ import {DialogComponent} from "./components/dialog/dialog.component";
     HttpClientModule,
     NgbModule,
     MatDialogModule,
-    FormsModule
   ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [
-    HeaderComponent
+    HeaderComponent,
   ],
   bootstrap: [AppComponent]
 })

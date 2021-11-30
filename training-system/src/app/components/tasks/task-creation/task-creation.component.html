@@ -1,1 +1,74 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <p>task-creation works!</p>
+<div class="example-container">
+  <h2>Список объектов</h2>
+
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="example-list"
+    (cdkDropListDropped)="dropCommandToCommandsList($event)">
+    <div class="example-box" *ngFor="let item of todo" cdkDrag>
+      <div *ngIf="item === 'monkey'"><img src="assets/map-props/monkey.png" alt="monkey"></div>
+      <div *ngIf="item === 'basket'"><img src="assets/map-props/basket.png" alt="basket"></div>
+      <div *ngIf="item === 'liana'"><img src="assets/map-props/liana.png" alt="liana"></div>
+      <div *ngIf="item === 'banana'"><img src="assets/map-props/banana.png" alt="banana"></div>
+      <!--//TODO:ПОПРОБОВАТЬ ЦИКЛ ЧЕРЕЗ ДРАГ ЭНД ДРОП СПИСОК, ОНКЛИК, И ПЕРЕМЕННУЮ ДЛЯ CONNECTED TO-->
+    </div>
+  </div>
+</div>
+
+<div class="example-container">
+  <h2>Задание</h2>
+  <form>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Название</mat-label>
+      <input matInput placeholder="Название">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Задание</mat-label>
+      <textarea matInput placeholder="Задание ">
+      </textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div class="field-container">
+  <h2>ИГРОВОЕ ПОЛЕ</h2>
+  <div class="container-md">
+    <div class="row zero-spacing" *ngFor="let column of matrix; index as i"
+    >
+      <div class="col-md-1 zero-spacing" *ngFor="let row of column; index as j"
+      >
+        <div
+          (dragend)="dropItemToAnotherItem($event)"
+          ondragstart="event.dataTransfer.setData('text/plain',null)"
+          [id]="row.id"
+        >
+          <div class="field-cell zero-spacing"
+               (drop)="dropItemToAnotherItem($event)"
+               (dragover)="dragOver($event)"
+          >
+            <div class="cell-content"
+                 [id]="i+j"
+                 (dragstart)="dragStart($event)"
+                 draggable="true"
+            >
+              <app-field-cell></app-field-cell>
+            </div>
+          </div>
+          <!--</div>-->
+          <!--<ng-container *ngTemplateOutlet="fieldItem">
+          </ng-container>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #fieldItem>
+  <div class="field-cell">
+    БАНАН
+  </div>
+</ng-template>
