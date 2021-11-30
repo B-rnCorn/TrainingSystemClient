@@ -24,7 +24,7 @@
             <tr *ngFor="let user of studentsInGroup">
               <td>{{user.fio}}</td>
               <td>{{user.username}}</td>
-              <td class="text-center"><button class="btn btn-info btn-xs" ><span class="glyphicon glyphicon-remove"></span> Статистика</button></td>
+              <td class="text-center"><button class="btn btn-info btn-xs" (click)="getStudentSolution(user.username, user.fio)"><span class="glyphicon glyphicon-remove"></span> Статистика</button></td>
               <td class="text-center"><button class="btn btn-danger btn-xs" (click)="deleteUser(user.username)"><span class="glyphicon glyphicon-remove"></span> Удалить</button></td>
             </tr>
             </tbody>

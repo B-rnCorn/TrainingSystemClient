@@ -9,7 +9,7 @@ import {AppModule} from "../../app.module";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
-import { FieldCellComponent } from './field/field-cell/field-cell.component';
+//import { FieldCellComponent } from './field/field-cell/field-cell.component';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { FieldCellComponent } from './field/field-cell/field-cell.component';
     TaskCreationComponent,
     TaskSolutionComponent,
     TaskCheckComponent,
-    FieldCellComponent,
+    //FieldCellComponent,
   ],
   imports: [
     CommonModule,

@@ -21,9 +21,11 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorProvider} from "./interceptor/auth-interceptor";
 import { NotificationComponent } from './components/shared/notification/notification.component';
 import {NgbModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
-import {DialogComponent} from "./components/dialog/dialog.component";
+import {DialogComponent} from "./components/dialog/add-delete-students-dialog/dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
-import {TasksModule} from "./components/tasks/tasks.module";
+//import {TasksModule} from "./components/tasks/tasks.module";
+import { StatsDialogComponent } from './components/dialog/stats-dialog/stats.dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {TasksModule} from "./components/tasks/tasks.module";
     MarksComponent,
     HeaderComponent,
     NotificationComponent,
-    DialogComponent
+    DialogComponent,
+    StatsDialogComponent
   ],
   imports: [
     BrowserModule,
