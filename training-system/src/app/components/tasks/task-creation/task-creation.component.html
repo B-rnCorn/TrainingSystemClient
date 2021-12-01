@@ -53,15 +53,15 @@
                  (dragstart)="dragStart($event)"
                  draggable="true"
             >-->
-              <app-field-cell
-                class="field-cell zero-spacing"
-                (drop)="dropItemToAnotherItem($event)"
-                (dragover)="dragOver($event)"
-                (cellItem)="setCellItem($event)"
-                [type]="row.data">
-              </app-field-cell>
-           <!-- </div>
-          </div>-->
+          <app-field-cell
+            class="field-cell zero-spacing"
+            (drop)="dropItemToAnotherItem($event)"
+            (dragover)="dragOver($event)"
+            (cellItem)="setCellItem($event)"
+            [type]="row.data">
+          </app-field-cell>
+          <!-- </div>
+         </div>-->
           <!--</div>-->
           <!--<ng-container *ngTemplateOutlet="fieldItem">
           </ng-container>-->
