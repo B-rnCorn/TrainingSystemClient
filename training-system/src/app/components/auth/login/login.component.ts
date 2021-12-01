@@ -10,7 +10,7 @@ import {API} from "../../../constants/API";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {DialogComponent, DialogData} from "../../dialog/dialog.component";
+import {DialogComponent, DialogData} from "../../dialog/add-delete-students-dialog/dialog.component";
 
 @Component({
   selector: 'app-login',
