@@ -37,17 +37,14 @@
 </div>
 <div class="field-container">
   <h2>ИГРОВОЕ ПОЛЕ</h2>
-  <div class="container-md">
+  <div class="container">
     <div class="row zero-spacing" *ngFor="let column of matrix; index as i"
     >
-      <div class="col-md-1 zero-spacing" *ngFor="let row of column; index as j"
+      <div class="col-1 zero-spacing" *ngFor="let row of column; index as j"
       >
         <div
-          (dragend)="dropItemToAnotherItem($event)"
-          ondragstart="event.dataTransfer.setData('text/plain',null)"
-          [id]="row.id"
         >
-          <div class="field-cell zero-spacing"
+          <!--<div class="field-cell zero-spacing"
                (drop)="dropItemToAnotherItem($event)"
                (dragover)="dragOver($event)"
           >
@@ -55,10 +52,16 @@
                  [id]="i+j"
                  (dragstart)="dragStart($event)"
                  draggable="true"
-            >
-              <app-field-cell></app-field-cell>
-            </div>
-          </div>
+            >-->
+              <app-field-cell
+                class="field-cell zero-spacing"
+                (drop)="dropItemToAnotherItem($event)"
+                (dragover)="dragOver($event)"
+                (cellItem)="setCellItem($event)"
+                [type]="row.data">
+              </app-field-cell>
+           <!-- </div>
+          </div>-->
           <!--</div>-->
           <!--<ng-container *ngTemplateOutlet="fieldItem">
           </ng-container>-->
