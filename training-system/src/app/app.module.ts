@@ -23,8 +23,14 @@ import { NotificationComponent } from './components/shared/notification/notifica
 import {NgbModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 import {DialogComponent} from "./components/dialog/add-delete-students-dialog/dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
-//import {TasksModule} from "./components/tasks/tasks.module";
+//import {TasksModule} from './components/tasks/tasks.module';
 import { StatsDialogComponent } from './components/dialog/stats-dialog/stats.dialog.component';
+import {TasksComponent} from "./components/tasks/tasks.component";
+import {TaskCreationComponent} from "./components/tasks/task-creation/task-creation.component";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {FieldCellComponent} from "./components/tasks/field/field-cell/field-cell.component";
+import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-stats.dialog.component";
+import {NgApexchartsModule} from "ng-apexcharts";
 
 
 @NgModule({
@@ -38,7 +44,11 @@ import { StatsDialogComponent } from './components/dialog/stats-dialog/stats.dia
     HeaderComponent,
     NotificationComponent,
     DialogComponent,
-    StatsDialogComponent
+    StatsDialogComponent,
+    TasksComponent,
+    TaskCreationComponent,
+    FieldCellComponent,
+    AllStatsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +64,8 @@ import { StatsDialogComponent } from './components/dialog/stats-dialog/stats.dia
     HttpClientModule,
     NgbModule,
     MatDialogModule,
+    DragDropModule,
+    NgApexchartsModule
   ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [

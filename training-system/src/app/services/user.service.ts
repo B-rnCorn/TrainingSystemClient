@@ -3,16 +3,19 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UserDto} from "../models/userDto";
 import {MessageResponse} from "../models/messageResponse";
+import {StudentMarks} from "../models/studentMarks";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private studentsInGroupUrl = 'http://localhost:8080/api/user/get_students';
-  private studentsAllUrl = 'http://localhost:8080/api/user';
-  private deleteStudentWithoutGroupUrl = 'http://localhost:8080/api/user/delete_student';
-  private addUserToGroupUrl = 'http://localhost:8080/api/user/add_student';
+  private baseUrl = 'http://localhost:8080/api/user';
+  private studentsInGroupUrl = this.baseUrl + '/get_students';
+  private studentsAllUrl = this.baseUrl;
+  private deleteStudentWithoutGroupUrl = this.baseUrl + '/delete_student';
+  private addUserToGroupUrl = this.baseUrl + '/add_student';
+  private getStudentMarksUrl = this.baseUrl + '/marks';
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +34,8 @@ export class UserService {
   public addUserToGroup(username: string): Observable<MessageResponse> {
     return this.
     http.get<MessageResponse>(this.addUserToGroupUrl, { params: new HttpParams().append('username', username)});
+  }
+  public getStudentMarks(): Observable<any> {
+    return this.http.get<StudentMarks>(this.getStudentMarksUrl);
   }
 }

@@ -7,8 +7,11 @@
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
   <li [ngbNavItem]="1">
     <a ngbNavLink>Группа</a>
-    <ng-template ngbNavContent >
+      <ng-template ngbNavContent >
+        <br>
+        <button class="btn btn-success btn-xs all-stat" (click)="getStudentMarks()"><span class="glyphicon glyphicon-remove"></span>Статистика по всему журналу</button>
       <br>
+        <br>
       <div class="d-flex justify-content-center">
         <div class="row col-md-8 col-md-offset-2 ">
           <table class="table table-striped ">
