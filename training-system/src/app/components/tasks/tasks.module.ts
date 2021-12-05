@@ -9,7 +9,11 @@ import {AppModule} from "../../app.module";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
-//import { FieldCellComponent } from './field/field-cell/field-cell.component';
+import { FieldCellComponent } from './field/field-cell/field-cell.component';
+import { FieldItemsListComponent } from './field/field-items-list/field-items-list.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSliderModule} from "@angular/material/slider";
 
 
 @NgModule({
@@ -18,7 +22,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     TaskCreationComponent,
     TaskSolutionComponent,
     TaskCheckComponent,
-    //FieldCellComponent,
+    FieldCellComponent,
+    FieldItemsListComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +32,9 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSliderModule
   ],
   exports: [
     TasksComponent,

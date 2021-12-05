@@ -23,14 +23,12 @@ import { NotificationComponent } from './components/shared/notification/notifica
 import {NgbModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 import {DialogComponent} from "./components/dialog/add-delete-students-dialog/dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
-//import {TasksModule} from './components/tasks/tasks.module';
+import {TasksModule} from "./components/tasks/tasks.module";
 import { StatsDialogComponent } from './components/dialog/stats-dialog/stats.dialog.component';
-import {TasksComponent} from "./components/tasks/tasks.component";
-import {TaskCreationComponent} from "./components/tasks/task-creation/task-creation.component";
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {FieldCellComponent} from "./components/tasks/field/field-cell/field-cell.component";
-import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-stats.dialog.component";
+import { FieldSettingsDialogComponent } from './components/dialog/field-settings-dialog/field-settings-dialog.component';
+import {MatSliderModule} from "@angular/material/slider";
 import {NgApexchartsModule} from "ng-apexcharts";
+import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-stats.dialog.component";
 
 
 @NgModule({
@@ -45,28 +43,26 @@ import {NgApexchartsModule} from "ng-apexcharts";
     NotificationComponent,
     DialogComponent,
     StatsDialogComponent,
-    TasksComponent,
-    TaskCreationComponent,
-    FieldCellComponent,
+    FieldSettingsDialogComponent,
     AllStatsDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    LayoutModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    MatDialogModule,
-    DragDropModule,
-    NgApexchartsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        LayoutModule,
+        MatSlideToggleModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgbModule,
+        MatDialogModule,
+        MatSliderModule,
+        NgApexchartsModule,
+    ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [
     HeaderComponent,

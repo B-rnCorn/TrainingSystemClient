@@ -8,6 +8,8 @@ import {EventEmitter} from '@angular/core';
 })
 export class FieldCellComponent implements OnInit {
 
+  @Input() isSourceListItem: boolean = false;
+
   @Input() set type(type: string){
     type === 'monkey' ? this.isMonkey = true : this.isMonkey = false;
     type === 'basket' ? this.isBasket = true : this.isBasket = false;

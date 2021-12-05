@@ -1,0 +1,12 @@
+<div class="field-items-list_content"
+  *ngFor="let item of listData; index as i">
+  <app-field-cell
+    class="field-cell"
+    (drop)="dropItemToAnotherItem($event)"
+    (dragover)="dragOver($event)"
+    (cellItem)="onCellItemChange($event)"
+    [type]="item.data"
+    [isSourceListItem]="true"
+  >
+  </app-field-cell>
+</div>

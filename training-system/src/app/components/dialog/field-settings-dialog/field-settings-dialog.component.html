@@ -1,0 +1,17 @@
+<p>НАСТРОЙКИ ПОЛЯ</p>
+<form class="example-form" [formGroup]="_settingsForm">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Длина стороны</mat-label>
+    <input matInput placeholder="Длина стороны" formControlName="filedSideLength">
+  </mat-form-field>
+  <mat-slider
+    (valueChange)="onSideLengthChange($event)"
+    thumbLabel
+    tickInterval="1000"
+    step="1"
+    min="4"
+    max="12"
+    aria-label="units">
+  </mat-slider>
+
+</form>

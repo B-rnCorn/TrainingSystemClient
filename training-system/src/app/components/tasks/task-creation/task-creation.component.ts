@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {CdkDragDrop, CdkDragExit, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {removeElementFromArrayExpression} from "@angular/material/schematics/ng-update/migrations/hammer-gestures-v9/remove-array-element";
+import {MatDialog} from "@angular/material/dialog";
+import {FieldSettingsDialogComponent} from "../../dialog/field-settings-dialog/field-settings-dialog.component";
 
 @Component({
   selector: 'app-task-creation',
@@ -19,44 +21,48 @@ export class TaskCreationComponent implements OnInit {
     [{data: 'empty', id: '51'}, {data: 'empty', id: '52'}, {data: 'empty', id: '53'}, {data: 'empty', id: '54'}, {data: 'empty', id: '55'}],
   ]
 
+  public sourceFieldsList: object[] = [{data: 'liana', id: '1'}, {data: 'monkey', id: '2'}, {data: 'empty', id: '3'}, {data: 'banana', id: '4'}, {data: 'basket', id: '5'}];
+
   public todo = ['monkey', 'banana', 'basket', 'liana'];
 
   public done = ['ЦИКЛ'];
 
-  constructor() {
+  public cellItem: any;
+  public isCellItemFromSourceList: boolean = false;
+
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
 
-  /*public dropItemToAnotherItem(event: CdkDragDrop<string[]>): void {
-    console.log(event);
-    if (event.previousContainer === event.container) {
-      console.log('deb',event.container.data, event.previousIndex, event.currentIndex);
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      console.log('drop');
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-  }*/
-  cellItem: any;
-
   public setCellItem(item: any): void {
+    this.cellItem = item;
+    this.isCellItemFromSourceList = false;
+  }
+
+  public setCellItemFromSourceList(item: any): void {
+    this.isCellItemFromSourceList = true;
     this.cellItem = item;
   }
 
+  openSettingsDialog() {
+    this.dialog.open(FieldSettingsDialogComponent, {
+      /*data: {
+        animal: 'panda',
+      },*/
+    });
+  }
+
   public dropItemToAnotherItem(event: any): void {
-    console.log(event);
+    console.log(event,this.cellItem);
     if (event.target.classList.contains("cell-content")) {
-      let sourceType = this.spotCellType(this.cellItem.classList);
-      this.cellItem.classList.remove(this.spotCellType(this.cellItem.classList));
-      this.cellItem.classList.add(this.spotCellType(event.target.classList));
-      event.target.classList.remove(this.spotCellType(event.target.classList));
+      let sourceType = TaskCreationComponent.spotCellType(this.cellItem.classList);
+      if (!this.isCellItemFromSourceList) {
+        this.cellItem.classList.remove(TaskCreationComponent.spotCellType(this.cellItem.classList));
+        this.cellItem.classList.add(TaskCreationComponent.spotCellType(event.target.classList));
+      }
+      event.target.classList.remove(TaskCreationComponent.spotCellType(event.target.classList));
       event.target.classList.add(sourceType);
       console.log('ЯЧЕЙКА', event.target.children);
     }
@@ -67,7 +73,7 @@ export class TaskCreationComponent implements OnInit {
   * принимает список классов ноды-ячейки, возвращает ее тип
   * */
   //TODO: Вынести в энум
-  private spotCellType(classList: any): string{
+  private static spotCellType(classList: any): string{
     switch (true) {
       case classList.contains('monkey'):
         return 'monkey'
