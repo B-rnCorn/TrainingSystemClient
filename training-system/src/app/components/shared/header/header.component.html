@@ -1,5 +1,5 @@
 <!--Таба регистрации-->
-<mat-toolbar *ngIf="currentTab === 'register' || currentTab ===''">
+<mat-toolbar color="primary" style="min-height:75px" *ngIf="currentTab === 'register' || currentTab ===''">
   <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>computer</mat-icon>
@@ -15,7 +15,7 @@
   <span class="example-spacer"></span>
 </mat-toolbar>
 <!--Таба логина-->
-<mat-toolbar *ngIf="currentTab === 'login'">
+<mat-toolbar color="primary" style="min-height:75px" *ngIf="currentTab === 'login'">
   <span class="example-spacer"></span>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>computer</mat-icon>
@@ -31,7 +31,7 @@
   <span class="example-spacer"></span>
 </mat-toolbar>
 <!--Таба задач-->
-<mat-toolbar *ngIf="currentTab === 'tasks' || currentTab === 'other'">
+<mat-toolbar color="primary" style="min-height:75px" *ngIf="currentTab === 'tasks' || currentTab === 'other'">
   <span class="example-spacer">
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>computer</mat-icon>
