@@ -56,24 +56,35 @@
 
 .field-container {
   width: 500px;
-  height: 500px;
+  height: 600px;
   margin: 0 0 25px 0;
   display: inline-block;
   vertical-align: top;
+  .field-wrap {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    .field-row {
+      flex-direction: row;
+      width: 100%;
+      height: 20%;
+    }
+    .field-col {
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.fields-items-list-wrapper {
+  width: 100px;
+  height: 100px;
 }
 
 .field-cell {
-  margin: 10px;
-  width: 60px;
-  height: 60px;
 }
 
 
 .zero-spacing {
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
 }
