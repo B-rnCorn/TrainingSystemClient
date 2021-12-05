@@ -7,6 +7,8 @@ import {DialogComponent, DialogData} from "../dialog/add-delete-students-dialog/
 import {SolutionDto} from "../../models/solutionDto";
 import {SolutionService} from "../../services/solution.service";
 import {DialogStatsData, StatsDialogComponent} from "../dialog/stats-dialog/stats.dialog.component";
+import {StudentMarks} from "../../models/studentMarks";
+import {AllStatsDialogComponent, DialogAllStatsData} from "../dialog/all-stats-dialog/all-stats.dialog.component";
 
 @Component({
   selector: 'app-journal',
@@ -19,6 +21,8 @@ export class JournalComponent implements OnInit {
   studentsInGroup: UserDto[] = [];
   allStudents: UserDto[] = [];
   studentSolutions: SolutionDto[] = [];
+  fi: string[][] = [[]];
+  marks: number[][] = [[]];
   message: string;
 
   constructor(private userService: UserService,
@@ -70,11 +74,21 @@ export class JournalComponent implements OnInit {
         this.getAllStudents();
       });
   }
+  public getStudentMarks(): any{
+    this.userService.getStudentMarks()
+      .subscribe((data) => {
+        console.log(data);
+        this.fi = (data.map(function(info: StudentMarks): any {return info.fio.split(' ', 2); }));
+        this.marks = data.map(function (info: StudentMarks): any {return info.marks; });
+        console.log(this.fi);
+        console.log(this.marks);
+        this.openAllStatsDialog({fi: this.fi, marks: this.marks});
+      });
+  }
 
   //TODO:  в отдельный файл
   public openAddOrDeleteDialog(data: DialogData): MatDialogRef<DialogComponent> {
     return this.dialog.open(DialogComponent, {
-
       data,
     });
   }
@@ -83,6 +97,13 @@ export class JournalComponent implements OnInit {
     return this.dialog.open(StatsDialogComponent, {
       height: '500px',
       width: '500px',
+      data,
+    });
+  }
+  public openAllStatsDialog(data: DialogAllStatsData): MatDialogRef<AllStatsDialogComponent> {
+    return this.dialog.open(AllStatsDialogComponent, {
+      height: '630px',
+      width: '1900px',
       data,
     });
   }
