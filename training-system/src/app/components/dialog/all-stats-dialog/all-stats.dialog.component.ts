@@ -43,7 +43,7 @@ export type ChartOptions = {
 })
 export class AllStatsDialogComponent {
 
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
 
   constructor(
@@ -53,32 +53,23 @@ export class AllStatsDialogComponent {
     this.chartOptions = {
       series: [
         {
-          name: "distibuted",
+          name: 'Средний балл',
           data: this.getAverageScore(),
         }
       ],
       chart: {
         height: 450,
-        type: "bar",
-        events: {
-          // click: function(chart, w, e) {
-          //   // console.log(chart, w, e)
-          // }
-        }
+        type: 'bar',
+        toolbar: {
+          show: false,
+        },
       },
       colors: [
-        // "#008FFB",
-        // "#00E396",
-        // "#FEB019",
-        // "#FF4560",
-        "#775DD0",
-        // "#546E7A",
-        // "#26a69a",
-        // "#D10CE8"
+        '#775DD0',
       ],
       plotOptions: {
         bar: {
-          columnWidth: "45%",
+          columnWidth: '45%',
           distributed: true
         }
       },
@@ -101,7 +92,6 @@ export class AllStatsDialogComponent {
           style: {
             fontSize: '13px',
             fontFamily: 'Montserrat Alternates, sans-serif',
-            // fontWeight: 'bolder'
             }
           }
       },
@@ -109,16 +99,6 @@ export class AllStatsDialogComponent {
         categories: this.data.fi,
         labels: {
           style: {
-            colors: [
-              // "#008FFB",
-              // "#00E396",
-              // "#FEB019",
-              // "#FF4560",
-              // "#775DD0",
-              // "#546E7A",
-              // "#26a69a",
-              // "#D10CE8"
-            ],
             fontSize: '13px',
             fontFamily: 'Montserrat Alternates, sans-serif',
             fontWeight: 'bolder'

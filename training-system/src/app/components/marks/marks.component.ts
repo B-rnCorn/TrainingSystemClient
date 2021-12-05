@@ -63,18 +63,16 @@ export class MarksComponent implements OnInit {
         this.chartOptions = {
           series: [
             {
-              name: "distibuted",
+              name: "Количество",
               data: [count_5, count_4, count_3, count_2, count_1, count_0]
             }
           ],
           chart: {
-            height: 350,
-            type: "bar",
-            events: {
-              // click: function(chart, w, e) {
-              //   // console.log(chart, w, e)
-              // }
+            toolbar: {
+              show: false,
             },
+            height: 300,
+            type: 'bar',
           },
           colors: [
             "#33CC00",
@@ -87,7 +85,7 @@ export class MarksComponent implements OnInit {
 
           plotOptions: {
             bar: {
-              columnWidth: "80%",
+              columnWidth: '80%',
               distributed: true
             }
           },
@@ -100,19 +98,35 @@ export class MarksComponent implements OnInit {
           grid: {
             show: false
           },
-          yaxis:{
+          yaxis: {
+            title: {
+              text: 'Количество',
+              style: {
+                fontSize: '14px',
+                fontFamily: 'Montserrat Alternates, sans-serif',
+              },
+            },
             labels: {
               style: {
-                fontSize: "16px",
-                fontFamily: "Montserrat Alternates, sans-serif",
+                fontSize: '14px',
+                fontFamily: 'Montserrat Alternates, sans-serif',
+                fontWeight: 'bolder',
               },
               formatter: function(val: any) {
-                return val.toFixed(0)
+                return val.toFixed(0);
               },
 
             }
           },
           xaxis: {
+
+            title: {
+              text: 'Оценки',
+              style: {
+                fontSize: '14px',
+                fontFamily: 'Montserrat Alternates, sans-serif',
+              },
+            },
             categories: [
               ["5"],
               ["4"],
@@ -131,8 +145,9 @@ export class MarksComponent implements OnInit {
                   "#F70000",
                   "#000000",
                 ],
-                fontSize: "16px",
+                fontSize: "14px",
                 fontFamily: "Montserrat Alternates, sans-serif",
+                fontWeight: 'bolder',
               }
             }
           }
