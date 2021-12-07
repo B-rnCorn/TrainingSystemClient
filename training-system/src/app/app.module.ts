@@ -29,6 +29,8 @@ import { FieldSettingsDialogComponent } from './components/dialog/field-settings
 import {MatSliderModule} from "@angular/material/slider";
 import {NgApexchartsModule} from "ng-apexcharts";
 import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-stats.dialog.component";
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {StudentSnackBarComponent} from "./components/snack-bar/student-snack-bar/student-snack-bar.component";
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-
     DialogComponent,
     StatsDialogComponent,
     FieldSettingsDialogComponent,
-    AllStatsDialogComponent
+    AllStatsDialogComponent,
+    StudentSnackBarComponent
   ],
     imports: [
         BrowserModule,
@@ -62,6 +65,7 @@ import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-
         MatDialogModule,
         MatSliderModule,
         NgApexchartsModule,
+        MatSnackBarModule
     ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [

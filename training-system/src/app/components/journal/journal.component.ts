@@ -9,6 +9,8 @@ import {SolutionService} from "../../services/solution.service";
 import {DialogStatsData, StatsDialogComponent} from "../dialog/stats-dialog/stats.dialog.component";
 import {StudentMarks} from "../../models/studentMarks";
 import {AllStatsDialogComponent, DialogAllStatsData} from "../dialog/all-stats-dialog/all-stats.dialog.component";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {StudentSnackBarComponent} from "../snack-bar/student-snack-bar/student-snack-bar.component";
 
 @Component({
   selector: 'app-journal',
@@ -25,7 +27,8 @@ export class JournalComponent implements OnInit {
   marks: number[][] = [[]];
   message: string;
 
-  constructor(private userService: UserService,
+  constructor(private snackBar: MatSnackBar,
+              private userService: UserService,
               private router: Router, public dialog: MatDialog,
               private solutionService: SolutionService) {}
 
@@ -51,7 +54,11 @@ export class JournalComponent implements OnInit {
     this.userService.deleteStudentWithoutGroup(username)
       .subscribe((data) => {
         this.message = data.message;
-        this.openAddOrDeleteDialog({message: this.message});
+        this.snackBar.openFromComponent(StudentSnackBarComponent, {
+          duration: 1500,
+          data: this.message,
+        });
+        // this.openAddOrDeleteDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
       });
@@ -69,7 +76,11 @@ export class JournalComponent implements OnInit {
     this.userService.addUserToGroup(username)
       .subscribe((data) => {
         this.message = data.message;
-        this.openAddOrDeleteDialog({message: this.message});
+        this.snackBar.openFromComponent(StudentSnackBarComponent, {
+          duration: 1500,
+          data: this.message,
+        });
+        // this.openAddOrDeleteDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
       });
