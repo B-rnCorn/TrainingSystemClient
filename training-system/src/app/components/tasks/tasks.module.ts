@@ -14,6 +14,8 @@ import { FieldItemsListComponent } from './field/field-items-list/field-items-li
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSliderModule} from "@angular/material/slider";
+import { TaskViewComponent } from './task-view/task-view.component';
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -24,6 +26,8 @@ import {MatSliderModule} from "@angular/material/slider";
     TaskCheckComponent,
     FieldCellComponent,
     FieldItemsListComponent,
+    TaskViewComponent,
+    TaskViewComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +38,8 @@ import {MatSliderModule} from "@angular/material/slider";
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatSliderModule
+    MatSliderModule,
+    RouterModule
   ],
   exports: [
     TasksComponent,

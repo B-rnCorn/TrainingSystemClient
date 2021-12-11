@@ -3,6 +3,7 @@ import {CdkDragDrop, CdkDragExit, copyArrayItem, moveItemInArray, transferArrayI
 import {removeElementFromArrayExpression} from "@angular/material/schematics/ng-update/migrations/hammer-gestures-v9/remove-array-element";
 import {MatDialog} from "@angular/material/dialog";
 import {FieldSettingsDialogComponent} from "../../dialog/field-settings-dialog/field-settings-dialog.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-task-creation',
@@ -30,10 +31,15 @@ export class TaskCreationComponent implements OnInit {
   public cellItem: any;
   public isCellItemFromSourceList: boolean = false;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit(): void {
+  }
+
+  public navigate(path: string){
+    console.log(path);
+    this.router.navigate([path]);
   }
 
   public setCellItem(item: any): void {

@@ -17,6 +17,7 @@ export class SolutionService {
     return this.
     http.get<MessageResponse>(this.studentSolutionsUrl, { params: new HttpParams().append('username', username)});
   }
+
   public getAllStudentSolutions(): Observable<any> {
     return this.http.get(this.studentSolutionsUrlForStudent);
   }

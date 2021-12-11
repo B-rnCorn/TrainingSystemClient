@@ -14,7 +14,8 @@ export class CONSTANTS{
   static TABS = {
     login: 'login',
     register: 'register',
-    tasks: 'tasks',
+    taskCreation: 'task-creation',
+    taskView: 'task-view',
     info: 'info',
     marks: 'marks',
     journal: 'journal'
