@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         this.tokenService.saveUsername(res.username);
         this.tokenService.saveTokenType(res.type);
         subscription.unsubscribe();
-        this.router.navigate(['tasks']);
+        this.router.navigate(['task-view']);
       },
         error => {
           this.message = 'Ошибка: Проверьте введенные данные';

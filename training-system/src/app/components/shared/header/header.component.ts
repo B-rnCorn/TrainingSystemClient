@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   @Input('currentTab')
   public currentTab: string = '';
 
-  constructor(private router:Router, private tokenService: TokenService) { }
+  constructor(private router: Router, private tokenService: TokenService) { }
   ngOnInit(): void {
   }
 
