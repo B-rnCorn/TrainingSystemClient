@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<app-header
+  [currentTab]="'tasks'"
+>
+</app-header>
+<h2 style="text-align: center">Мои задания</h2>
+<button *ngIf="roles.includes('ROLE_TEACHER')" mat-raised-button class="add" (click)="navigate('task-creation')">
+  Добавить
+  <mat-icon color="primary">add</mat-icon>
+</button>
+
+<div *ngIf="roles.includes('ROLE_STUDENT')">
+  <div  *ngFor="let task of studentTasks" class="container bcontent">
+    <div class="card" style="width: 650px;">
+      <div class="row no-gutters">
+        <div class="col-sm-9">
+          <div class="content">
+            <p class="title">{{task.taskDto.title}}<span class="date"> {{task.taskDto.date}}</span></p>
+                      <p>Автор: {{task.taskDto.author.fio}}</p>
+                      <p>{{task.taskDto.description}}</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card-body">
+            <p class="task_st" *ngIf="task.solutionDto">Решено<br>{{task.solutionDto.date}}</p> <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="roles.includes('ROLE_TEACHER')">
+<div  *ngFor="let task of teacherTasks" class="container bcontent">
+  <div class="card" style="width: 650px;">
+    <div class="row no-gutters">
+      <div class="col-sm-9">
+        <div class="content">
+          <p class="title">{{task.title}}<span class="date"> {{task.date}}</span></p>
+<!--          <p>Автор: {{task.author.fio}}</p>-->
+          <p>{{task.description}}</p>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card-body">
+          <a class="delete" (click)="deleteTask(task.id)">Удалить</a> <br>
+          <a *ngIf="!task.isPublished" class="change" href="#" style="margin-top:10px;">Изменить</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<br>
+
