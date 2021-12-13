@@ -1,14 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<app-header
-  [currentTab]="'tasks'"
->
-</app-header>
-<button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="openSettingsDialog()">
-  <mat-icon>settings</mat-icon>
-</button>
-<div class="example-container">
+<div class="task-part">
   <h2>Список объектов</h2>
   <div class="fields-items-list-wrapper">
     <app-field-items-list
@@ -19,31 +11,54 @@
   </div>
 </div>
 
-<div class="example-container">
+<div class="task-part center-element">
   <h2>Задание</h2>
-  <form>
-    <mat-form-field class="example-full-width" appearance="fill">
+  <form [formGroup]="_taskForm" (ngSubmit)="onSave()">
+    <mat-form-field class="example-full-width field-name white-background" appearance="fill">
       <mat-label>Название</mat-label>
-      <input matInput placeholder="Название">
+      <input matInput placeholder="Название" formControlName="name">
     </mat-form-field>
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width field-task white-background" appearance="fill">
       <mat-label>Задание</mat-label>
-      <textarea matInput placeholder="Задание ">
+      <textarea matInput placeholder="Задание " rows="17" style="resize: none;" formControlName="description">
       </textarea>
     </mat-form-field>
+    <button mat-button type="submit" class="example-icon favorite-icon white-background" aria-label="Example icon-button with heart icon"  style="width: 250px;">
+      Сохранить
+      <mat-icon>save</mat-icon>
+    </button>
   </form>
+  <div>
+    <button mat-button class="example-icon favorite-icon white-background" aria-label="Example icon-button with heart icon"  style="width: 250px;"
+            (click)="openSettingsDialog()">
+      Настройки поля
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+  <div>
+    <button mat-button class="example-icon favorite-icon white-background" aria-label="Example icon-button with heart icon" style="width: 250px;"
+            (click)="openSettingsDialog()">
+      Сгенерировать задание
+      <mat-icon>build</mat-icon>
+    </button>
+  </div>
 </div>
 <div class="field-container">
   <h2>ИГРОВОЕ ПОЛЕ</h2>
   <div class="field-wrap">
-    <div class="field-row" *ngFor="let column of matrix; index as i">
-      <div class="field-col zero-spacing" *ngFor="let row of column; index as j">
+    <div class="field-row" *ngFor="let column of field.columns; index as i">
+      <div class="field-col" *ngFor="let cell of column.cells; index as j"
+      [ngClass]="{size__4: getSize(4), size__5: getSize(5), size__6: getSize(6), size__7: getSize(7),
+              size__8: getSize(8), size__9: getSize(9), size__10: getSize(10), size__11: getSize(11),
+              size__12: getSize(12)}">
         <app-field-cell
           class="field-cell"
-          (drop)="dropItemToAnotherItem($event)"
+          (drop)="dropItemToAnotherItem($event, i, j)"
           (dragover)="dragOver($event)"
           (cellItem)="setCellItem($event)"
-          [type]="row.data">
+          [type]="cell.type"
+          [idColumn]="i"
+          [idCell]="j">
         </app-field-cell>
       </div>
     </div>

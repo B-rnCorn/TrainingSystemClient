@@ -2,28 +2,32 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {MessageResponse} from "../models/messageResponse";
-import * as http from "http";
 import {TaskStudentDto} from "../models/taskStudentdto";
-import {Task} from "protractor/built/taskScheduler";
+import {API} from "../constants/API";
+import {Task} from "../models/task";
+import {TaskDto} from "../models/taskDto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl = 'http://localhost:8080/api/task';
-  private getTaskByTeacherUrl = this.baseUrl + '/teacher';
-  private getTaskForStudentUrl = this.baseUrl + '/student';
+  /*private Tasks:TaskDto[];
+  private activeTask: Task;*/
 
   constructor(private http: HttpClient) { }
 
-  public getTaskByTeacher(): Observable<any> {
-    return this.
-    http.get(this.getTaskByTeacherUrl);
+  public saveTask(task: Task): Observable<any> {
+    return this.http.post(API.SAVE_TASK,task);
+  }
+
+  public getTaskByTeacher(): Observable<any[]> {
+    // @ts-ignore
+    return this.http.get(API.GET_TASK_TEACHER);
   }
   public deleteTask(id: number): Observable<any> {
-    return this.http.delete<MessageResponse>(`${this.baseUrl}/${id}`);
+    return this.http.delete<MessageResponse>(`${API.DELETE_TASK}/${id}`);
   }
   public getTaskForStudent(): Observable<any> {
-    return this.http.get<TaskStudentDto>(this.getTaskForStudentUrl);
+    return this.http.get<TaskStudentDto>(API.GET_TASK_STUDENT);
   }
 }

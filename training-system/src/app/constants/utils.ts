@@ -18,6 +18,15 @@ export class CONSTANTS{
     taskView: 'task-view',
     info: 'info',
     marks: 'marks',
-    journal: 'journal'
+    journal: 'journal',
+    tasks: 'tasks',
   };
+
+  static FIELD_TYPES = {
+    monkey: 'm',
+    basket: 'u',
+    liana: 'l',
+    banana: 'b',
+    empty: 'e',
+  }
 }

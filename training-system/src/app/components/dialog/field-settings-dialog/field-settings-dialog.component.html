@@ -2,7 +2,7 @@
 <form class="example-form" [formGroup]="_settingsForm">
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Длина стороны</mat-label>
-    <input matInput placeholder="Длина стороны" formControlName="filedSideLength">
+    <input matInput placeholder="Длина стороны" formControlName="filedSideLength" (input)="onSideLengthChange($event,true)">
   </mat-form-field>
   <mat-slider
     (valueChange)="onSideLengthChange($event)"
@@ -13,5 +13,6 @@
     max="12"
     aria-label="units">
   </mat-slider>
-
+  <button mat-button (click)="submit()">Применить</button>
+  <button mat-button (click)="cancel()">Отмена</button>
 </form>

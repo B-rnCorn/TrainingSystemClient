@@ -4,7 +4,7 @@
 >
 </app-header>
 <h2 style="text-align: center">Мои задания</h2>
-<button *ngIf="roles.includes('ROLE_TEACHER')" mat-raised-button class="add" (click)="navigate('task-creation')">
+<button *ngIf="roles.includes('ROLE_TEACHER')" mat-raised-button class="add" (click)="navigate('tasks')">
   Добавить
   <mat-icon color="primary">add</mat-icon>
 </button>
@@ -44,7 +44,7 @@
       <div class="col-sm-3">
         <div class="card-body">
           <a class="delete" (click)="deleteTask(task.id)">Удалить</a> <br>
-          <a *ngIf="!task.isPublished" class="change" href="#" style="margin-top:10px;">Изменить</a>
+          <a *ngIf="!task.isPublished" class="change" (click)="editTask(task.id)" style="margin-top:10px;">Изменить</a>
         </div>
       </div>
     </div>

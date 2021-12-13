@@ -4,7 +4,6 @@ import {TaskDto} from "../../../models/taskDto";
 import {Router} from "@angular/router";
 import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {log} from "util";
 import {TokenService} from "../../../services/token.service";
 import {SolutionService} from "../../../services/solution.service";
 import {SolutionDto} from "../../../models/solutionDto";
@@ -43,6 +42,10 @@ export class TaskViewComponent implements OnInit {
         });
         this.getTaskByTeacher();
       });
+  }
+
+  public editTask(id: number): any{
+    this.router.navigate(['tasks',id]);
   }
   public getTaskByTeacher(): any {
     this.taskService.getTaskByTeacher()

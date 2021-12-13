@@ -1,9 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
-import {CdkDragDrop, CdkDragExit, copyArrayItem, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {removeElementFromArrayExpression} from "@angular/material/schematics/ng-update/migrations/hammer-gestures-v9/remove-array-element";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {FieldSettingsDialogComponent} from "../../dialog/field-settings-dialog/field-settings-dialog.component";
-import {Router} from "@angular/router";
+import {Field} from "../../../models/field";
+import {CONSTANTS} from "../../../constants/utils";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UtilsService} from "../../../services/utils.service";
+import {Task} from "../../../models/task";
+import {TaskService} from "../../../services/task.service";
+import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {TaskDto} from "../../../models/taskDto";
 
 @Component({
   selector: 'app-task-creation',
@@ -11,66 +17,114 @@ import {Router} from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./task-creation.component.less']
 })
-export class TaskCreationComponent implements OnInit {
+export class TaskCreationComponent implements OnInit, OnDestroy{
 
   @ViewChild('doneList') doneList: any;
   //@ts-ignore
-  public matrix: object[[]] = [[{data: 'liana', id: '11'}, {data: 'monkey', id: '12'}, {data: 'empty', id: '13'}, {data: 'banana', id: '14'}, {data: 'empty', id: '15'}],
-    [{data: 'empty', id: '21'}, {data: 'empty', id: '22'}, {data: 'empty', id: '23'}, {data: 'empty', id: '24'}, {data: 'empty', id: '25'}],
-    [{data: 'empty', id: '31'}, {data: 'empty', id: '32'}, {data: 'empty', id: '33'}, {data: 'empty', id: '34'}, {data: 'empty', id: '35'}],
-    [{data: 'empty', id: '41'}, {data: 'empty', id: '42'}, {data: 'empty', id: '43'}, {data: 'empty', id: '44'}, {data: 'empty', id: '45'}],
-    [{data: 'empty', id: '51'}, {data: 'empty', id: '52'}, {data: 'empty', id: '53'}, {data: 'empty', id: '54'}, {data: 'empty', id: '55'}],
-  ]
+  public field: Field = new Field([]);
 
-  public sourceFieldsList: object[] = [{data: 'liana', id: '1'}, {data: 'monkey', id: '2'}, {data: 'empty', id: '3'}, {data: 'banana', id: '4'}, {data: 'basket', id: '5'}];
+  public sourceFieldsList: object[] = [{data: CONSTANTS.FIELD_TYPES.liana, id: '1'},
+    {data: CONSTANTS.FIELD_TYPES.monkey, id: '2'},
+    {data: CONSTANTS.FIELD_TYPES.empty, id: '3'},
+    {data: CONSTANTS.FIELD_TYPES.banana, id: '4'},
+    {data: CONSTANTS.FIELD_TYPES.basket, id: '5'}];
 
-  public todo = ['monkey', 'banana', 'basket', 'liana'];
-
-  public done = ['ЦИКЛ'];
+  public _taskForm: FormGroup = new FormGroup({
+    "name": new FormControl("",
+      [Validators.required]),
+    "description": new FormControl("",
+      [Validators.required]),
+  });
 
   public cellItem: any;
+  private cellItemColumnId: number;
+  private cellItemCellId: number;
+  public dimension: number = 4;
   public isCellItemFromSourceList: boolean = false;
+  private subs: Subscription[];
+  private task: TaskDto;
 
-  constructor(public dialog: MatDialog, private router: Router) {
+  constructor(public dialog: MatDialog,
+              public cdr: ChangeDetectorRef,
+              private utilsService: UtilsService,
+              private taskService: TaskService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
+
+  ngOnDestroy(): void {
+        /*this.subs.forEach(sub => sub.unsubscribe());*/
+    }
 
   ngOnInit(): void {
+    let taskId = 0;
+    let subscription = this.route.params.subscribe(params => {
+      taskId = Number.parseInt(params['id']);
+      let sub =this.taskService.getTaskByTeacher().subscribe(tasks => {
+        this.task = tasks.find(task => task.id === taskId);
+        if (this.task) {
+          this.field = this.utilsService.mapToField(this.task.map);
+          this.dimension = Math.sqrt(this.task.map.length);
+          this._taskForm.patchValue({
+            name: this.task.title,
+            description: this.task.description,
+          });
+          this.cdr.detectChanges();
+        } else {
+          this.buildField(this.dimension);
+        }
+      });
+      /*this.subs.push(sub);*/
+    });
+    /*this.subs.push(subscription);*/
   }
 
-  public navigate(path: string){
-    console.log(path);
-    this.router.navigate([path]);
+  public buildField(dimension: number) {
+    this.field = new Field([]);
+    this.field.initEmptyField(dimension);
+    this.cdr.detectChanges();
   }
 
   public setCellItem(item: any): void {
-    this.cellItem = item;
+    this.cellItem = item.target;
+    this.cellItemColumnId = item.idColumn;
+    this.cellItemCellId = item.idCell;
     this.isCellItemFromSourceList = false;
   }
 
   public setCellItemFromSourceList(item: any): void {
     this.isCellItemFromSourceList = true;
-    this.cellItem = item;
+    this.cellItemColumnId = item.idColumn;
+    this.cellItemCellId = item.idCell;
+    this.cellItem = item.target;
   }
 
   openSettingsDialog() {
-    this.dialog.open(FieldSettingsDialogComponent, {
-      /*data: {
-        animal: 'panda',
-      },*/
+    const dialogRef = this.dialog.open(FieldSettingsDialogComponent, {
+      data: {dimension: 0},
     });
+    let sub = dialogRef.afterClosed().subscribe(data => {
+      this.dimension = data.dimension;
+      this.buildField(this.dimension);
+      console.log('data', data);
+      sub.unsubscribe();
+    })
   }
 
-  public dropItemToAnotherItem(event: any): void {
-    console.log(event,this.cellItem);
+  public dropItemToAnotherItem(event: any, columnId: number, cellId: number): void {
+    console.log(event, this.cellItem);
     if (event.target.classList.contains("cell-content")) {
       let sourceType = TaskCreationComponent.spotCellType(this.cellItem.classList);
       if (!this.isCellItemFromSourceList) {
+        this.field.setNewCellType(this.cellItemColumnId, this.cellItemCellId, TaskCreationComponent.spotCellType(event.target.classList));
         this.cellItem.classList.remove(TaskCreationComponent.spotCellType(this.cellItem.classList));
         this.cellItem.classList.add(TaskCreationComponent.spotCellType(event.target.classList));
       }
+      this.field.setNewCellType(columnId, cellId, sourceType);
       event.target.classList.remove(TaskCreationComponent.spotCellType(event.target.classList));
       event.target.classList.add(sourceType);
       console.log('ЯЧЕЙКА', event.target.children);
+      console.log('Matrix', this.field);
     }
   }
 
@@ -78,20 +132,24 @@ export class TaskCreationComponent implements OnInit {
   * Функция определения типа клетки
   * принимает список классов ноды-ячейки, возвращает ее тип
   * */
-  //TODO: Вынести в энум
-  private static spotCellType(classList: any): string{
+
+  private static spotCellType(classList: any): string {
     switch (true) {
-      case classList.contains('monkey'):
-        return 'monkey'
-      case classList.contains('banana'):
-        return 'banana'
-      case classList.contains('liana'):
-        return 'liana'
-      case classList.contains('basket'):
-        return 'basket'
+      case classList.contains(CONSTANTS.FIELD_TYPES.monkey):
+        return CONSTANTS.FIELD_TYPES.monkey
+      case classList.contains(CONSTANTS.FIELD_TYPES.banana):
+        return CONSTANTS.FIELD_TYPES.banana
+      case classList.contains(CONSTANTS.FIELD_TYPES.liana):
+        return CONSTANTS.FIELD_TYPES.liana
+      case classList.contains(CONSTANTS.FIELD_TYPES.basket):
+        return CONSTANTS.FIELD_TYPES.basket
       default:
-        return 'empty'
+        return CONSTANTS.FIELD_TYPES.empty
     }
+  }
+
+  public getSize(size: number): boolean{
+    return this.dimension === size;
   }
 
   public dragStart(event: any) {
@@ -102,7 +160,22 @@ export class TaskCreationComponent implements OnInit {
     event.preventDefault();
   }
 
-  public dropCommandToCommandsList(event: CdkDragDrop<string[]>): void {
+  public onSave(){
+    if (!this._taskForm.invalid) {
+      let task = new Task(
+        this._taskForm.value['name'],
+        this._taskForm.value['description'],
+        this.utilsService.parseField(this.field),
+      )
+      let sub = this.taskService.saveTask(task).subscribe(res => {
+        console.log('AAAAA');
+        sub.unsubscribe();
+      });
+    }
+  }
+
+
+  /*public dropCommandToCommandsList(event: CdkDragDrop<string[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -113,12 +186,12 @@ export class TaskCreationComponent implements OnInit {
 
   public dropOutside(event: CdkDragExit<string[]>): void {
     console.log('event', event);
-    /*if (event.previousContainer === event.container) {
+    /!*if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       this.done = event.previousContainer.data.filter(item => item !== event.previousContainer.data[event.previousIndex]);
       console.log('done',this.done);
-    }*/
+    }*!/
   }
 
   public drop(event: CdkDragDrop<string[]>): void {
@@ -139,6 +212,6 @@ export class TaskCreationComponent implements OnInit {
       );
       console.log('done', this.done);
     }
-  }
+  }*/
 
 }
