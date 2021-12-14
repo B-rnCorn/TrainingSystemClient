@@ -17,7 +17,7 @@ export class TaskService {
   constructor(private http: HttpClient) { }
 
   public saveTask(task: Task): Observable<any> {
-    return this.http.post(API.SAVE_TASK,task);
+    return this.http.post(API.SAVE_TASK,TaskService.convertTaskForSave(task, false));
   }
 
   public updateTask(id: number,task: Task, isPublished: boolean): Observable<any>{
@@ -37,5 +37,9 @@ export class TaskService {
 
   private static convertTaskForUpdate (id: number, task: Task, isPublished: boolean): object{
     return {id: id, title: task.title, description: task.description, map: task.map, isPublished: isPublished}
+  }
+
+  private static convertTaskForSave ( task: Task, isPublished: boolean): object{
+    return {title: task.title, description: task.description, map: task.map, isPublished: isPublished}
   }
 }
