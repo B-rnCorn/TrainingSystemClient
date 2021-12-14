@@ -46,7 +46,7 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   public isCellItemFromSourceList: boolean = false;
   private subs: Subscription[] = [];
   private task: TaskDto;
-  private isUpdate: boolean = false;
+  public isUpdate: boolean = false;
   private taskId: number = -1;
 
   constructor(public dialog: MatDialog,
@@ -169,6 +169,16 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
 
   public dragOver(event: any) {
     event.preventDefault();
+  }
+
+  public onPublishTask(){
+    this.subs.push(this.taskService.updateTask(this.taskId,this.task, true).subscribe(() => {
+      let message = 'Задание успешно опубликовано.';
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: message,
+      });
+    }));
   }
 
   public onSave(){

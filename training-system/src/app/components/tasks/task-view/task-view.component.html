@@ -34,17 +34,23 @@
 <div  *ngFor="let task of teacherTasks" class="container bcontent">
   <div class="card" style="width: 650px;">
     <div class="row no-gutters">
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <div class="content">
-          <p class="title">{{task.title}}<span class="date"> {{task.date}}</span></p>
+          <p class="title">{{task.title}}<span class="date"> {{task.date}}</span><mat-icon *ngIf="task.isPublished" class="published">share</mat-icon></p>
 <!--          <p>Автор: {{task.author.fio}}</p>-->
           <p>{{task.description}}</p>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="card-body">
-          <a class="delete" (click)="deleteTask(task.id)">Удалить</a> <br>
-          <a *ngIf="!task.isPublished" class="change" (click)="editTask(task.id)" style="margin-top:10px;">Изменить</a>
+          <div class="container">
+            <div class="row">
+              <a class="delete" (click)="deleteTask(task.id)">Удалить</a>
+            </div>
+            <div class="row">
+              <a *ngIf="!task.isPublished" class="change" (click)="editTask(task.id)">Изменить</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

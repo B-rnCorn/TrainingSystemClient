@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from "../../../services/task.service";
 import {TaskDto} from "../../../models/taskDto";
 import {Router} from "@angular/router";
@@ -8,15 +8,17 @@ import {TokenService} from "../../../services/token.service";
 import {SolutionService} from "../../../services/solution.service";
 import {SolutionDto} from "../../../models/solutionDto";
 import {TaskStudentDto} from "../../../models/taskStudentdto";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-task-view',
   templateUrl: './task-view.component.html',
   styleUrls: ['./task-view.component.less']
 })
-export class TaskViewComponent implements OnInit {
+export class TaskViewComponent implements OnInit, OnDestroy{
 
   public roles: string[] = this.tokenService.getAuthorities();
+  private subs: Subscription[] = [];
   public username: any = this.tokenService.getUsername();
   teacherTasks: TaskDto[] = [];
   studentTasks: TaskStudentDto[] = [];
@@ -25,6 +27,10 @@ export class TaskViewComponent implements OnInit {
               private tokenService: TokenService, private solutionService: SolutionService) { }
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  public init(){
     if (this.roles.includes('ROLE_TEACHER')) {
       this.getTaskByTeacher();
     }
@@ -32,8 +38,9 @@ export class TaskViewComponent implements OnInit {
       this.getTaskForStudent();
     }
   }
+
   public deleteTask(id: number): any{
-    this.taskService.deleteTask(id)
+    this.subs.push(this.taskService.deleteTask(id)
       .subscribe((data) => {
         this.message = data.message;
         this.snackBar.openFromComponent(StudentSnackBarComponent, {
@@ -41,18 +48,19 @@ export class TaskViewComponent implements OnInit {
           data: this.message,
         });
         this.getTaskByTeacher();
-      });
+      }));
   }
 
   public editTask(id: number): any{
     this.router.navigate(['tasks',id]);
   }
+
   public getTaskByTeacher(): any {
-    this.taskService.getTaskByTeacher()
+    this.subs.push(this.taskService.getTaskByTeacher()
       .subscribe((data) => {
         this.teacherTasks = data;
         console.log(this.teacherTasks);
-      });
+      }));
   }
 
   public getTaskForStudent(): any {
@@ -66,6 +74,10 @@ export class TaskViewComponent implements OnInit {
   public navigate(path: string){
     console.log(path);
     this.router.navigate([path]);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
 }

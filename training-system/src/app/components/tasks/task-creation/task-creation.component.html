@@ -24,9 +24,14 @@
       </textarea>
     </mat-form-field>
     <button mat-button type="submit" class="example-icon favorite-icon white-background"
-            aria-label="Example icon-button with heart icon" style="width: 250px;">
+            style="width: 250px;">
       Сохранить
       <mat-icon>save</mat-icon>
+    </button>
+    <button mat-button (click)="onPublishTask()" [disabled]="!isUpdate" class="example-icon favorite-icon white-background"
+            style="width: 250px;">
+      Опубликовать
+      <mat-icon>share</mat-icon>
     </button>
   </form>
   <div>
