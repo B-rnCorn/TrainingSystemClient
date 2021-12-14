@@ -16,6 +16,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSliderModule} from "@angular/material/slider";
 import { TaskViewComponent } from './task-view/task-view.component';
 import {RouterModule} from "@angular/router";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -29,18 +30,19 @@ import {RouterModule} from "@angular/router";
     TaskViewComponent,
     TaskViewComponent
   ],
-  imports: [
-    CommonModule,
-    DragDropModule,
-    AppModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSliderModule,
-    RouterModule
-  ],
+    imports: [
+        CommonModule,
+        DragDropModule,
+        AppModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSliderModule,
+        RouterModule,
+        MatTooltipModule
+    ],
   exports: [
     TasksComponent,
     TaskCreationComponent,

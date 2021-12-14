@@ -10,8 +10,8 @@ import {TaskService} from "../../../services/task.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TaskDto} from "../../../models/taskDto";
-import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
 
 @Component({
   selector: 'app-task-creation',
@@ -24,7 +24,7 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   @ViewChild('doneList') doneList: any;
   //@ts-ignore
   public field: Field = new Field([]);
-  saveMessage: string = '';
+  private backendMessage: string = '';
 
   public sourceFieldsList: object[] = [{data: CONSTANTS.FIELD_TYPES.liana, id: '1'},
     {data: CONSTANTS.FIELD_TYPES.monkey, id: '2'},
@@ -44,8 +44,10 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   private cellItemCellId: number;
   public dimension: number = 4;
   public isCellItemFromSourceList: boolean = false;
-  private subs: Subscription[];
+  private subs: Subscription[] = [];
   private task: TaskDto;
+  private isUpdate: boolean = false;
+  private taskId: number = -1;
 
   constructor(public dialog: MatDialog,
               public cdr: ChangeDetectorRef,
@@ -57,16 +59,16 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-        /*this.subs.forEach(sub => sub.unsubscribe());*/
+        this.subs.forEach(sub => sub.unsubscribe());
     }
 
   ngOnInit(): void {
-    let taskId = 0;
-    let subscription = this.route.params.subscribe(params => {
-      taskId = Number.parseInt(params['id']);
-      let sub =this.taskService.getTaskByTeacher().subscribe(tasks => {
-        this.task = tasks.find(task => task.id === taskId);
+    this.subs.push(this.route.params.subscribe(params => {
+      this.taskId = Number.parseInt(params['id']);
+      this.subs.push(this.taskService.getTaskByTeacher().subscribe(tasks => {
+        this.task = tasks.find(task => task.id === this.taskId);
         if (this.task) {
+          this.isUpdate = true;
           this.field = this.utilsService.mapToField(this.task.map);
           this.dimension = Math.sqrt(this.task.map.length);
           this._taskForm.patchValue({
@@ -75,17 +77,22 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
           });
           this.cdr.detectChanges();
         } else {
+          this.isUpdate = false;
           this.buildField(this.dimension);
         }
-      });
-      /*this.subs.push(sub);*/
-    });
-    /*this.subs.push(subscription);*/
+      }));
+    }));
   }
 
   public buildField(dimension: number) {
     this.field = new Field([]);
     this.field.initEmptyField(dimension);
+    this.cdr.detectChanges();
+  }
+
+  public clearField() {
+    this.field = new Field([]);
+    this.field.initEmptyField(this.dimension);
     this.cdr.detectChanges();
   }
 
@@ -171,15 +178,26 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
         this._taskForm.value['description'],
         this.utilsService.parseField(this.field),
       )
-      let sub = this.taskService.saveTask(task).subscribe(res => {
-        this.saveMessage = res.message;
-        this.snackBar.openFromComponent(StudentSnackBarComponent, {
-          duration: 1500,
-          data: this.saveMessage,
-        });
-        console.log('AAAAA');
-        sub.unsubscribe();
-      });
+      if (!this.isUpdate) {
+        this.subs.push(this.taskService.saveTask(task).subscribe(res => {
+          this.backendMessage = res.message;
+          this.snackBar.openFromComponent(StudentSnackBarComponent, {
+            duration: 1500,
+            data: this.backendMessage,
+          });
+          console.log('TASK SAVED', res);
+        }));
+      } else {
+        this.subs.push(this.taskService.updateTask(this.taskId, task, false).subscribe(res => {
+          this.backendMessage = res.message;
+          this.snackBar.openFromComponent(StudentSnackBarComponent, {
+            duration: 1500,
+            data: this.backendMessage,
+          });
+          console.log('TASK UPDATED', res);
+          /*this.router.navigate(['task-view']);*/
+        }));
+      }
     }
   }
 

@@ -23,20 +23,23 @@
       <textarea matInput placeholder="Задание " rows="17" style="resize: none;" formControlName="description">
       </textarea>
     </mat-form-field>
-    <button mat-button type="submit" class="example-icon favorite-icon white-background" aria-label="Example icon-button with heart icon"  style="width: 250px;">
+    <button mat-button type="submit" class="example-icon favorite-icon white-background"
+            aria-label="Example icon-button with heart icon" style="width: 250px;">
       Сохранить
       <mat-icon>save</mat-icon>
     </button>
   </form>
   <div>
-    <button mat-button class="example-icon favorite-icon white-background" aria-label="Example icon-button with heart icon"  style="width: 250px;"
+    <button mat-button class="example-icon favorite-icon white-background"
+            aria-label="Example icon-button with heart icon" style="width: 250px;"
             (click)="openSettingsDialog()">
       Настройки поля
       <mat-icon>settings</mat-icon>
     </button>
   </div>
   <div>
-    <button mat-button class="example-icon favorite-icon white-background" aria-label="Example icon-button with heart icon" style="width: 250px;"
+    <button mat-button class="example-icon favorite-icon white-background"
+            aria-label="Example icon-button with heart icon" style="width: 250px;"
             (click)="openSettingsDialog()">
       Сгенерировать задание
       <mat-icon>build</mat-icon>
@@ -44,22 +47,53 @@
   </div>
 </div>
 <div class="field-container">
-  <h2>ИГРОВОЕ ПОЛЕ</h2>
-  <div class="field-wrap">
-    <div class="field-row" *ngFor="let column of field.columns; index as i">
-      <div class="field-col" *ngFor="let cell of column.cells; index as j"
-      [ngClass]="{size__4: getSize(4), size__5: getSize(5), size__6: getSize(6), size__7: getSize(7),
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>ИГРОВОЕ ПОЛЕ</h2>
+      </div>
+      <div class="col-md-2">
+      </div>
+      <div class="field-buttons">
+        <div class="container">
+          <div class="row align-content-end">
+            <div class="field-button">
+              <button mat-icon-button
+                      mat-raised-button
+                      matTooltip="Проверить задание"
+                      [matTooltipPosition]="'below'">
+                <mat-icon>check_circle_outline</mat-icon>
+              </button>
+            </div>
+            <div class="field-button">
+              <button mat-icon-button
+                      mat-raised-button
+                      matTooltip="Очистить поле"
+                      [matTooltipPosition]="'below'"
+                      (click)="clearField()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="field-wrap">
+      <div class="field-row" *ngFor="let column of field.columns; index as i">
+        <div class="field-col" *ngFor="let cell of column.cells; index as j"
+             [ngClass]="{size__4: getSize(4), size__5: getSize(5), size__6: getSize(6), size__7: getSize(7),
               size__8: getSize(8), size__9: getSize(9), size__10: getSize(10), size__11: getSize(11),
               size__12: getSize(12)}">
-        <app-field-cell
-          class="field-cell"
-          (drop)="dropItemToAnotherItem($event, i, j)"
-          (dragover)="dragOver($event)"
-          (cellItem)="setCellItem($event)"
-          [type]="cell.type"
-          [idColumn]="i"
-          [idCell]="j">
-        </app-field-cell>
+          <app-field-cell
+            class="field-cell"
+            (drop)="dropItemToAnotherItem($event, i, j)"
+            (dragover)="dragOver($event)"
+            (cellItem)="setCellItem($event)"
+            [type]="cell.type"
+            [idColumn]="i"
+            [idCell]="j">
+          </app-field-cell>
+        </div>
       </div>
     </div>
   </div>

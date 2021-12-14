@@ -20,6 +20,10 @@ export class TaskService {
     return this.http.post(API.SAVE_TASK,task);
   }
 
+  public updateTask(id: number,task: Task, isPublished: boolean): Observable<any>{
+    return this.http.post(API.UPDATE_TASK, TaskService.convertTaskForUpdate(id, task, isPublished));
+  }
+
   public getTaskByTeacher(): Observable<any[]> {
     // @ts-ignore
     return this.http.get(API.GET_TASK_TEACHER);
@@ -29,5 +33,9 @@ export class TaskService {
   }
   public getTaskForStudent(): Observable<any> {
     return this.http.get<TaskStudentDto>(API.GET_TASK_STUDENT);
+  }
+
+  private static convertTaskForUpdate (id: number, task: Task, isPublished: boolean): object{
+    return {id: id, title: task.title, description: task.description, map: task.map, isPublished: isPublished}
   }
 }

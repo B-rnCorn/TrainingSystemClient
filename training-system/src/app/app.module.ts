@@ -31,6 +31,7 @@ import {NgApexchartsModule} from "ng-apexcharts";
 import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-stats.dialog.component";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {StudentSnackBarComponent} from "./components/snack-bar/student-snack-bar/student-snack-bar.component";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import {StudentSnackBarComponent} from "./components/snack-bar/student-snack-bar
         MatDialogModule,
         MatSliderModule,
         NgApexchartsModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatTooltipModule,
     ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [

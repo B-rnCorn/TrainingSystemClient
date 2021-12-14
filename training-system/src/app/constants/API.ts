@@ -10,4 +10,5 @@ export const API = {
   GET_TASK_TEACHER: DEFAULT_URL + 'api/task/teacher',
   GET_TASK_STUDENT: DEFAULT_URL + 'api/task/student',
   DELETE_TASK: DEFAULT_URL + 'api/task',
+  UPDATE_TASK: DEFAULT_URL + 'api/task/update',
 }
