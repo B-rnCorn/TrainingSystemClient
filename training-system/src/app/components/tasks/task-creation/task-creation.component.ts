@@ -10,6 +10,8 @@ import {TaskService} from "../../../services/task.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TaskDto} from "../../../models/taskDto";
+import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-task-creation',
@@ -22,6 +24,7 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   @ViewChild('doneList') doneList: any;
   //@ts-ignore
   public field: Field = new Field([]);
+  saveMessage: string = '';
 
   public sourceFieldsList: object[] = [{data: CONSTANTS.FIELD_TYPES.liana, id: '1'},
     {data: CONSTANTS.FIELD_TYPES.monkey, id: '2'},
@@ -49,7 +52,8 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
               private utilsService: UtilsService,
               private taskService: TaskService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnDestroy(): void {
@@ -168,6 +172,11 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
         this.utilsService.parseField(this.field),
       )
       let sub = this.taskService.saveTask(task).subscribe(res => {
+        this.saveMessage = res.message;
+        this.snackBar.openFromComponent(StudentSnackBarComponent, {
+          duration: 1500,
+          data: this.saveMessage,
+        });
         console.log('AAAAA');
         sub.unsubscribe();
       });
