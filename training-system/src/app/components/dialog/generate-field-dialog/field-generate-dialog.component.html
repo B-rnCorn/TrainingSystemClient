@@ -1,0 +1,48 @@
+<p>ГЕНЕРАЦИЯ ПОЛЯ</p>
+<form class="example-form" [formGroup]="_generateForm">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Кол-во бананов</mat-label>
+    <input readonly matInput placeholder="Кол-во бананов" formControlName="countBananas" (input)="countBananasChange($event,true)">
+  </mat-form-field>
+  <mat-slider
+    (valueChange)="countBananasChange($event)"
+    thumbLabel
+    tickInterval="1000"
+    step="1"
+    min="0"
+    max="{{data.maxCountBananas}}"
+    aria-label="units">
+  </mat-slider>
+  <br>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Кол-во лиан</mat-label>
+    <input matInput placeholder="Кол-во лиан" formControlName="countLianas" (input)="countLianasChange($event,true)">
+  </mat-form-field>
+  <mat-slider
+    (valueChange)="countLianasChange($event)"
+    thumbLabel
+    tickInterval="1000"
+    step="1"
+    min="0"
+    max="{{data.maxCountLianas}}"
+    aria-label="units">
+  </mat-slider>
+  <br>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Кол-во корзин</mat-label>
+    <input matInput placeholder="Кол-во корзин" formControlName="countBaskets" (input)="countBasketsChange($event,true)">
+  </mat-form-field>
+  <mat-slider
+    (valueChange)="countBasketsChange($event)"
+    thumbLabel
+    tickInterval="1000"
+    step="1"
+    min="1"
+    max="{{data.maxCountBaskets}}"
+    aria-label="units">
+  </mat-slider>
+  <br>
+  <button mat-button (click)="submit()">Применить</button>
+  <br>
+  <button mat-button (click)="cancel()">Отмена</button>
+</form>
