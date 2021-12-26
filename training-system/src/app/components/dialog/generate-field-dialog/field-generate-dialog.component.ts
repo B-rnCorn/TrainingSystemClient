@@ -14,12 +14,12 @@ export interface GenerateData {
   styleUrls: ['./field-generate-dialog.component.less']
 })
 export class FieldGenerateDialogComponent implements OnInit {
-  public countBananas: number = 0;
+  public countBananas: number = 1;
   public countLianas: number = 0;
   public countBaskets: number = 1;
 
   _generateForm: FormGroup = new FormGroup({
-    "countBananas": new FormControl("0",
+    "countBananas": new FormControl("1",
       [Validators.required]),
     "countBaskets": new FormControl("1",
       [Validators.required]),

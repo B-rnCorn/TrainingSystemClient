@@ -36,6 +36,7 @@ import {DragulaModule} from "ng2-dragula";
 import {MatSelectModule} from "@angular/material/select";
 import {DialogValidateComponent} from "./components/dialog/validate-dialog/dialog.validate.component";
 import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-dialog/field-generate-dialog.component";
+import { InfoDialogComponent } from './components/dialog/info-dialog/info-dialog.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-d
     AllStatsDialogComponent,
     StudentSnackBarComponent,
     DialogValidateComponent,
-    FieldGenerateDialogComponent
+    FieldGenerateDialogComponent,
+    InfoDialogComponent
   ],
     imports: [
         BrowserModule,

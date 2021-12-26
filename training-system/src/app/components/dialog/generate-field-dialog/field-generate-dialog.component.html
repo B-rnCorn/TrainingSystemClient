@@ -1,6 +1,6 @@
 <p>ГЕНЕРАЦИЯ ПОЛЯ</p>
 <form class="example-form" [formGroup]="_generateForm">
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field [style.width.px]=130 class="example-full-width" appearance="fill">
     <mat-label>Кол-во бананов</mat-label>
     <input readonly matInput placeholder="Кол-во бананов" formControlName="countBananas" (input)="countBananasChange($event,true)">
   </mat-form-field>
@@ -9,12 +9,12 @@
     thumbLabel
     tickInterval="1000"
     step="1"
-    min="0"
+    min="1"
     max="{{data.maxCountBananas}}"
     aria-label="units">
   </mat-slider>
   <br>
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field [style.width.px]=130 class="example-full-width" appearance="fill">
     <mat-label>Кол-во лиан</mat-label>
     <input matInput placeholder="Кол-во лиан" formControlName="countLianas" (input)="countLianasChange($event,true)">
   </mat-form-field>
@@ -28,7 +28,7 @@
     aria-label="units">
   </mat-slider>
   <br>
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field [style.width.px]=130 class="example-full-width" appearance="fill">
     <mat-label>Кол-во корзин</mat-label>
     <input matInput placeholder="Кол-во корзин" formControlName="countBaskets" (input)="countBasketsChange($event,true)">
   </mat-form-field>
@@ -42,7 +42,6 @@
     aria-label="units">
   </mat-slider>
   <br>
-  <button mat-button (click)="submit()">Применить</button>
-  <br>
-  <button mat-button (click)="cancel()">Отмена</button>
+  <button style="margin-left: 150px; width: 120px" mat-button (click)="submit()">Применить</button>
+  <button style="margin-left: 5px; width: 120px" mat-button (click)="cancel()">Отмена</button>
 </form>

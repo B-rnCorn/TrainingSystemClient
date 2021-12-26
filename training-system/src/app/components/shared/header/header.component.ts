@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {TokenService} from "../../../services/token.service";
+import {MatDialog} from "@angular/material/dialog";
+import {InfoDialogComponent} from "../../dialog/info-dialog/info-dialog.component";
 
 @Component({
   selector: 'app-header',
@@ -14,7 +16,7 @@ export class HeaderComponent implements OnInit {
   @Input('currentTab')
   public currentTab: string = '';
 
-  constructor(private router: Router, private tokenService: TokenService) { }
+  constructor(private router: Router, private tokenService: TokenService, public dialog: MatDialog) { }
   ngOnInit(): void {
   }
 
@@ -22,5 +24,9 @@ export class HeaderComponent implements OnInit {
     console.log(path);
     this.router.navigate([path]);
   }
+  public openInfoDialog() {
+    const dialogRef = this.dialog.open(InfoDialogComponent);
+  }
+
 
 }
