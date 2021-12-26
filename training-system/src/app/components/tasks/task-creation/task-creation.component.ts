@@ -231,12 +231,13 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   }
 
   public onPublishTask(){
-    this.subs.push(this.taskService.updateTask(this.taskId,this.task, true).subscribe(() => {
+    this.subs.push(this.taskService.updateTask(this.taskId, this.task, true).subscribe(() => {
       let message = 'Задание успешно опубликовано.';
       this.snackBar.openFromComponent(StudentSnackBarComponent, {
         duration: 1500,
         data: message,
       });
+      this.router.navigate(['task-view']);
     }));
   }
   public validateField(field: string): string[] {
@@ -256,6 +257,12 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
     }
     if (countBananas > validCountBananas) {
       errors.push('Допустимое число бананов: ' + validCountBananas + '. Вы установили ' + countBananas + ' !');
+    }
+    if (countBananas < 1) {
+      errors.push('На поле должен быть хотя бы 1 банан!');
+    }
+    if (countBaskets < 1 ) {
+      errors.push('На поле должна быть хотя бы 1 корзина!');
     }
     if (countBaskets > validCountBaskets) {
       errors.push('Допустимое число корзин: ' + validCountBaskets + '. Вы установили ' + countBaskets + ' !');
@@ -281,7 +288,7 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
     }
   }
 
-  public onSave(){
+  public onSaveTask(){
     if (!this._taskForm.invalid) {
         const field = this.utilsService.parseField(this.field);
         const errors = this.validateField(field);
@@ -304,6 +311,7 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
             data: this.backendMessage,
           });
           console.log('TASK SAVED', res);
+          this.router.navigate(['task-view']);
         }));
       } else {
         this.subs.push(this.taskService.updateTask(this.taskId, task, false).subscribe(res => {
@@ -313,6 +321,7 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
             data: this.backendMessage,
           });
           console.log('TASK UPDATED', res);
+          this.router.navigate(['task-view']);
           /*this.router.navigate(['task-view']);*/
         }));
       }

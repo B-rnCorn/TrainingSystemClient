@@ -6,19 +6,19 @@
     <h1 class="mat-h1 register-header">Регистрация</h1>
     <form [formGroup]="_registrationForm" class="register-form" (ngSubmit)="onSubmit($event)">
       <div class="form-layout">
-        <mat-form-field class="example-full-width" appearance="fill" >
-          <mat-label>Имя</mat-label>
-          <input matInput placeholder="Введите имя" formControlName="name">
-        </mat-form-field>
-        <span *ngIf="_formErrorsMessages && _formErrorsMessages['name']" class="mat-error">
-          {{_formErrorsMessages['name']}}
-        </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Фамилия</mat-label>
           <input matInput placeholder="Введите фамилию" formControlName="surname">
         </mat-form-field>
         <span *ngIf="_formErrorsMessages && _formErrorsMessages['surname']" class="mat-error">
           {{_formErrorsMessages['surname']}}
+        </span>
+        <mat-form-field class="example-full-width" appearance="fill" >
+          <mat-label>Имя</mat-label>
+          <input matInput placeholder="Введите имя" formControlName="name">
+        </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['name']" class="mat-error">
+          {{_formErrorsMessages['name']}}
         </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Отчество</mat-label>
@@ -31,14 +31,23 @@
           <mat-label>Логин</mat-label>
           <input matInput placeholder="Введите логин (4-16 символов)" formControlName="email">
         </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['password']" class="mat-error">
+          {{_formErrorsMessages['email']}}
+        </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Пароль</mat-label>
           <input type="password" matInput placeholder="Введите пароль (6-16 символов)" formControlName="password">
         </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['password']" class="mat-error">
+          {{_formErrorsMessages['password']}}
+        </span>
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Повторите пароль</mat-label>
           <input type="password" matInput placeholder="Повторите пароль" formControlName="secondPassword">
         </mat-form-field>
+        <span *ngIf="_formErrorsMessages && _formErrorsMessages['secondPassword']" class="mat-error">
+          {{_formErrorsMessages['secondPassword']}}
+        </span>
         <div class="register-form_toggle-wrapper">
           <div>Я ученик</div>
           <div><mat-slide-toggle color="primary" class="register-form_toggle" (change)="onChangeRole($event)"></mat-slide-toggle></div>

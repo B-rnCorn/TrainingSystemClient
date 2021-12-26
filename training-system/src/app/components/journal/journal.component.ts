@@ -46,13 +46,22 @@ export class JournalComponent implements OnInit {
           studentsSolutions: this.studentSolutions,
           fio,
         });
-      });
+      },
+        error => {
+          if (error.status !== 400) {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          }
+        });
 
   }
 
   public deleteUser(username: string): any{
     this.userService.deleteStudentWithoutGroup(username)
-      .subscribe((data) => {
+      .subscribe(
+        (data) => {
         this.message = data.message;
         this.snackBar.openFromComponent(StudentSnackBarComponent, {
           duration: 1500,
@@ -61,16 +70,40 @@ export class JournalComponent implements OnInit {
         // this.openAddOrDeleteDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
-      });
+      },
+        error => {
+          if (error.status !== 400) {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          }
+        });
   }
 
   public getUserInGroup(): any{
     this.userService.getStudentsInGroup()
-      .subscribe((data) => this.studentsInGroup = data);
+      .subscribe((data) => this.studentsInGroup = data,
+        error => {
+          if (error.status !== 400) {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          }
+        });
   }
   public getAllStudents(): any{
     this.userService.getAllStudents()
-      .subscribe((data) => this.allStudents = data);
+      .subscribe((data) => this.allStudents = data,
+        error => {
+          if (error.status !== 400) {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          }
+        });
   }
   public addStudentToGroup(username: string): any {
     this.userService.addUserToGroup(username)
@@ -83,7 +116,15 @@ export class JournalComponent implements OnInit {
         // this.openAddOrDeleteDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
-      });
+      },
+        error => {
+          if (error.status !== 400) {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          }
+        });
   }
   public getStudentMarks(): any{
     this.userService.getStudentMarks()
@@ -94,7 +135,15 @@ export class JournalComponent implements OnInit {
         console.log(this.fi);
         console.log(this.marks);
         this.openAllStatsDialog({fi: this.fi, marks: this.marks});
-      });
+      },
+        error => {
+          if (error.status !== 400) {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          }
+        });
   }
 
   //TODO:  в отдельный файл

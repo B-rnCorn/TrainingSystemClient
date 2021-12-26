@@ -33,7 +33,8 @@ export class UserService {
   }
   public addUserToGroup(username: string): Observable<MessageResponse> {
     return this.
-    http.get<MessageResponse>(this.addUserToGroupUrl, { params: new HttpParams().append('username', username)});
+    http.get<MessageResponse>(this.addUserToGroupUrl,
+      { params: new HttpParams().append('username', username)});
   }
   public getStudentMarks(): Observable<any> {
     return this.http.get<StudentMarks>(this.getStudentMarksUrl);

@@ -34,6 +34,7 @@ import {StudentSnackBarComponent} from "./components/snack-bar/student-snack-bar
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {DialogValidateComponent} from "./components/dialog/validate-dialog/dialog.validate.component";
 import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-dialog/field-generate-dialog.component";
+import { InfoDialogComponent } from './components/dialog/info-dialog/info-dialog.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-d
     AllStatsDialogComponent,
     StudentSnackBarComponent,
     DialogValidateComponent,
-    FieldGenerateDialogComponent
+    FieldGenerateDialogComponent,
+    InfoDialogComponent
   ],
     imports: [
         BrowserModule,

@@ -13,7 +13,7 @@
 
 <div class="task-part center-element">
   <h2>Задание</h2>
-  <form [formGroup]="_taskForm" (ngSubmit)="onSave()">
+  <form [formGroup]="_taskForm">
     <mat-form-field class="example-full-width field-name white-background" appearance="fill">
       <mat-label>Название</mat-label>
       <input matInput placeholder="Название" formControlName="name">
@@ -23,7 +23,7 @@
       <textarea matInput placeholder="Задание " rows="17" style="resize: none;" formControlName="description">
       </textarea>
     </mat-form-field>
-    <button mat-button type="submit" class="example-icon favorite-icon white-background"
+    <button mat-button (click)="onSaveTask()" class="example-icon favorite-icon white-background"
             style="width: 250px;">
       Сохранить
       <mat-icon>save</mat-icon>

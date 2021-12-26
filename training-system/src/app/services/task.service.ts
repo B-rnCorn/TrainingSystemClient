@@ -21,6 +21,7 @@ export class TaskService {
   }
 
   public updateTask(id: number,task: Task, isPublished: boolean): Observable<any>{
+    console.log("Debug: " + isPublished);
     return this.http.post(API.UPDATE_TASK, TaskService.convertTaskForUpdate(id, task, isPublished));
   }
 
