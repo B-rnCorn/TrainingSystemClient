@@ -45,7 +45,7 @@
   <div>
     <button mat-button class="example-icon favorite-icon white-background"
             aria-label="Example icon-button with heart icon" style="width: 250px;"
-            (click)="openSettingsDialog()">
+            (click)="openGenerateDialog()">
       Сгенерировать задание
       <mat-icon>build</mat-icon>
     </button>
@@ -66,7 +66,8 @@
               <button mat-icon-button
                       mat-raised-button
                       matTooltip="Проверить задание"
-                      [matTooltipPosition]="'below'">
+                      [matTooltipPosition]="'below'"
+                      (click)="checkValid()">
                 <mat-icon>check_circle_outline</mat-icon>
               </button>
             </div>

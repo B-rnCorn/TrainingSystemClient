@@ -12,6 +12,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TaskDto} from "../../../models/taskDto";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
+import {StatsDialogComponent} from "../../dialog/stats-dialog/stats.dialog.component";
+import {DialogComponent} from "../../dialog/add-delete-students-dialog/dialog.component";
+import {DialogValidateComponent} from "../../dialog/validate-dialog/dialog.validate.component";
+import {FieldGenerateDialogComponent} from "../../dialog/generate-field-dialog/field-generate-dialog.component";
+
 
 @Component({
   selector: 'app-task-creation',
@@ -26,11 +31,12 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
   public field: Field = new Field([]);
   private backendMessage: string = '';
 
-  public sourceFieldsList: object[] = [{data: CONSTANTS.FIELD_TYPES.liana, id: '1'},
+  public sourceFieldsList: object[] = [
+    {data: CONSTANTS.FIELD_TYPES.liana, id: '1'},
     {data: CONSTANTS.FIELD_TYPES.monkey, id: '2'},
-    {data: CONSTANTS.FIELD_TYPES.empty, id: '3'},
     {data: CONSTANTS.FIELD_TYPES.banana, id: '4'},
-    {data: CONSTANTS.FIELD_TYPES.basket, id: '5'}];
+    {data: CONSTANTS.FIELD_TYPES.basket, id: '5'},
+    {data: CONSTANTS.FIELD_TYPES.empty, id: '3'},];
 
   public _taskForm: FormGroup = new FormGroup({
     "name": new FormControl("",
@@ -84,6 +90,11 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
     }));
   }
 
+  // public generate() {
+  //   this.field.setNewCellType(0, 0, 'm');
+  // }
+
+
   public buildField(dimension: number) {
     this.field = new Field([]);
     this.field.initEmptyField(dimension);
@@ -120,6 +131,54 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
       console.log('data', data);
       sub.unsubscribe();
     })
+  }
+  openGenerateDialog() {
+    const fieldLength = this.utilsService.parseField(this.field).length;
+    const validCountMonkeys = 1;
+    const validCountBaskets = Math.floor(fieldLength * 0.1);
+    const validCountBananas = Math.floor(fieldLength * 0.3);
+    const validCountLianas = Math.floor(fieldLength * 0.2);
+    const dialogRef = this.dialog.open(FieldGenerateDialogComponent, {
+      data: {
+        maxCountBananas: validCountBananas,
+        maxCountLianas: validCountLianas,
+        maxCountBaskets: validCountBaskets,
+        },
+    });
+    let sub = dialogRef.afterClosed().subscribe(data => {
+      this.generateField(data.countBananas, data.countLianas, data.countBaskets, fieldLength);
+      this.cdr.detectChanges();
+    });
+  }
+
+  generateField(countBananas: number, countLianas: number, countBaskets: number, fieldLength: number) {
+    this.clearField();
+    const sideSize = Math.sqrt(fieldLength);
+    let indexes = [...Array(fieldLength).keys()];
+    const monkeyIndex = indexes[Math.floor(Math.random() * indexes.length)];
+    indexes.splice(indexes.indexOf(monkeyIndex), 1);
+    let bananasIndexes = [];
+    let lianasIndexes = [];
+    let basketsIndexes = [];
+    for (let i = 0; i < countBananas; i++) {
+      let index = indexes[Math.floor(Math.random() * indexes.length)];
+      indexes.splice(indexes.indexOf(index), 1);
+      bananasIndexes.push(index);
+    }
+    for (let i = 0; i < countLianas; i++) {
+      let index = indexes[Math.floor(Math.random() * indexes.length)];
+      indexes.splice(indexes.indexOf(index), 1);
+      lianasIndexes.push(index);
+    }
+    for (let i = 0; i < countBaskets; i++) {
+      let index = indexes[Math.floor(Math.random() * indexes.length)];
+      indexes.splice(indexes.indexOf(index), 1);
+      basketsIndexes.push(index);
+    }
+    this.field.setNewCellType(Math.floor(monkeyIndex / sideSize), monkeyIndex % sideSize, CONSTANTS.FIELD_TYPES.monkey);
+    bananasIndexes.forEach(index => this.field.setNewCellType(Math.floor(index / sideSize), index % sideSize, CONSTANTS.FIELD_TYPES.banana));
+    lianasIndexes.forEach(index => this.field.setNewCellType(Math.floor(index / sideSize), index % sideSize, CONSTANTS.FIELD_TYPES.liana));
+    basketsIndexes.forEach(index => this.field.setNewCellType(Math.floor(index / sideSize), index % sideSize, CONSTANTS.FIELD_TYPES.basket));
   }
 
   public dropItemToAnotherItem(event: any, columnId: number, cellId: number): void {
@@ -180,13 +239,62 @@ export class TaskCreationComponent implements OnInit, OnDestroy{
       });
     }));
   }
+  public validateField(field: string): string[] {
+    let errors = [];
+    const countAllObjects = field.length;
+    const validCountMonkeys = 1;
+    const validCountBaskets = Math.floor(countAllObjects * 0.1);
+    const validCountBananas = Math.floor(countAllObjects * 0.3);
+    const validCountLianas = Math.floor(countAllObjects * 0.2);
+    const countMonkeys = field.split('m').length - 1;
+    const countBaskets = field.split('u').length - 1;
+    const countBananas = field.split('b').length - 1;
+    const countLianas = field.split('l').length - 1;
+
+    if (countMonkeys !== validCountMonkeys) {
+      errors.push('На поле должна быть 1 обезьянка!');
+    }
+    if (countBananas > validCountBananas) {
+      errors.push('Допустимое число бананов: ' + validCountBananas + '. Вы установили ' + countBananas + ' !');
+    }
+    if (countBaskets > validCountBaskets) {
+      errors.push('Допустимое число корзин: ' + validCountBaskets + '. Вы установили ' + countBaskets + ' !');
+    }
+    if (countLianas > validCountLianas) {
+      errors.push('Допустимое число лиан: ' + validCountLianas + '. Вы установили ' + countLianas + ' !');
+    }
+    return errors;
+  }
+
+  public checkValid() {
+    const field = this.utilsService.parseField(this.field);
+    const errors = this.validateField(field);
+    if (errors.length !== 0) {
+      this.dialog.open(DialogValidateComponent, {
+        data: {errors}
+      });
+    } else {
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: 'Поле составлено правильно!',
+      });
+    }
+  }
 
   public onSave(){
     if (!this._taskForm.invalid) {
+        const field = this.utilsService.parseField(this.field);
+        const errors = this.validateField(field);
+        if (errors.length !== 0) {
+          this.dialog.open(DialogValidateComponent, {
+            data: {errors}
+          });
+          return;
+      }
       let task = new Task(
         this._taskForm.value['name'],
         this._taskForm.value['description'],
-        this.utilsService.parseField(this.field),
+        field,
       )
       if (!this.isUpdate) {
         this.subs.push(this.taskService.saveTask(task).subscribe(res => {
