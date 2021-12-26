@@ -1,61 +1,66 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <p>task-solution works!</p>
-<div class="example-container">
+<div class="task-part">
   <h2>КОМАНДЫ</h2>
-
-  <div
-    cdkDropList
-    #todoList="cdkDropList"
-    [cdkDropListData]="todo"
-    [cdkDropListConnectedTo]="[doneList]"
-    class="example-list"
-    (cdkDropListDropped)="dropCommandToCommandsList($event)">
-    <div class="example-box" *ngFor="let item of todo" cdkDrag>
+  <div class="command-list_source" dragula="COPYABLE" id="left">
+    <div class="command-list__item" *ngFor="let item of todo" draggable="true"
+    >
       <div *ngIf="item === 'ВПЕРЕД' || item === 'НАЗАД'" style="background-color: dodgerblue">{{item}}</div>
-      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'" style="background-color: limegreen">{{item}}</div>
+      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'"
+           style="background-color: limegreen">{{item}}</div>
       <div *ngIf="item === 'ПРЫЖОК'" style="background-color: blueviolet">{{item}}</div>
-      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange">{{item}}</div>
-      <!--//TODO:ПОПРОБОВАТЬ ЦИКОЛ ЧЕРЕЗ ДРАГ ЭНД ДРОП СПИСОК, ОНКЛИК, И ПЕРЕМЕННУЮ ДЛЯ CONNECTED TO-->
-    </div>
-  </div>
-</div>
-
-<div class="example-container">
-  <h2>СКРИПТ</h2>
-
-  <div
-    cdkDropList
-    #doneList="cdkDropList"
-    [cdkDropListData]="done"
-    [cdkDropListConnectedTo]="[todoList]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-    (cdkDropListExited)="dropOutside($event)">
-    <div class="example-box" *ngFor="let item of done" cdkDrag>
-      <div *ngIf="item === 'ВПЕРЕД' || item === 'НАЗАД'" style="background-color: dodgerblue">{{item}}</div>
-      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'" style="background-color: limegreen">{{item}}</div>
-      <div *ngIf="item === 'ПРЫЖОК'" style="background-color: blueviolet">{{item}}</div>
-      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange">{{item}}</div>
-    </div>
-  </div>
-</div>
-<div class="field-container">
-  <h2>ИГРОВОЕ ПОЛЕ</h2>
-  <div class="container-md">
-    <div class="row zero-spacing" *ngFor="let row of matrix; index as i">
-      <div class="col-md-1 zero-spacing" *ngFor="let column of row; index as j">
-        <div class="field-cell zero-spacing">
-          {{i}}{{j}}
-        </div>
-        <!--<ng-container *ngTemplateOutlet="fieldItem">
-        </ng-container>-->
+      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange" class="for-start">{{item}}
+        <input type="number" min="1" max="16" placeholder="i">
       </div>
     </div>
   </div>
 </div>
-<ng-template #fieldItem>
-  <div class="field-cell">
-    БАНАН
+
+<div class="task-part">
+  <h2>СКРИПТ</h2>
+  <div class="command-list_target"
+       dragula="COPYABLE"
+       id="right"
+       style="width: 250px;height: 500px; background-color: #cccccc;">
+
   </div>
-</ng-template>
+  <button mat-button  class="example-icon favorite-icon white-background"
+          style="width: 250px;">
+    Очистить
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-button  class="example-icon favorite-icon white-background"
+          style="width: 250px;">
+    Сохранить
+    <mat-icon>save</mat-icon>
+  </button>
+  <button mat-button  class="example-icon favorite-icon white-background"
+          style="width: 250px;">
+    Отправить
+    <mat-icon>share</mat-icon>
+  </button>
+</div>
+<div class="field-container">
+  <h2>ИГРОВОЕ ПОЛЕ</h2>
+  <div class="field-wrap">
+    <div class="field-row" *ngFor="let column of field.columns; index as i">
+      <div class="field-col" *ngFor="let cell of column.cells; index as j"
+           [ngClass]="{size__4: getSize(4), size__5: getSize(5), size__6: getSize(6), size__7: getSize(7),
+              size__8: getSize(8), size__9: getSize(9), size__10: getSize(10), size__11: getSize(11),
+              size__12: getSize(12)}">
+        <app-field-cell
+          class="field-cell"
+          [type]="cell.type"
+          [idColumn]="i"
+          [idCell]="j">
+        </app-field-cell>
+      </div>
+    </div>
+  </div>
+  <button mat-button  class="example-icon favorite-icon white-background"
+          style="width: 250px;">
+    Воспроизвести
+    <mat-icon>play_arrow</mat-icon>
+  </button>
+</div>

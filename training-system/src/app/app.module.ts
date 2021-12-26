@@ -32,6 +32,8 @@ import {AllStatsDialogComponent} from "./components/dialog/all-stats-dialog/all-
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {StudentSnackBarComponent} from "./components/snack-bar/student-snack-bar/student-snack-bar.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {DragulaModule} from "ng2-dragula";
+import {MatSelectModule} from "@angular/material/select";
 import {DialogValidateComponent} from "./components/dialog/validate-dialog/dialog.validate.component";
 import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-dialog/field-generate-dialog.component";
 
@@ -65,6 +67,7 @@ import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-d
         LayoutModule,
         MatSlideToggleModule,
         ReactiveFormsModule,
+        MatSelectModule,
         HttpClientModule,
         NgbModule,
         MatDialogModule,
@@ -72,6 +75,7 @@ import {FieldGenerateDialogComponent} from "./components/dialog/generate-field-d
         NgApexchartsModule,
         MatSnackBarModule,
         MatTooltipModule,
+        DragulaModule.forRoot(),
     ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [

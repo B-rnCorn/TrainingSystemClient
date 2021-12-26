@@ -2,4 +2,7 @@
   [currentTab]="'tasks'"
 >
 </app-header>
-<app-task-creation></app-task-creation>
+<app-task-creation *ngIf="actionType === 'create'"></app-task-creation>
+<app-task-solution *ngIf="actionType === 'solution'"
+                   [currentTaskId]="taskId"
+></app-task-solution>

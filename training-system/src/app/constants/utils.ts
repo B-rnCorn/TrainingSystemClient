@@ -29,4 +29,14 @@ export class CONSTANTS{
     banana: 'b',
     empty: 'e',
   }
+
+  static COMMAND_TYPES = {
+    forward:'f',
+    backward: 'b',
+    turn_right: 'r',
+    turn_left: 'l',
+    jump: 'j',
+    cycle_start: 's',
+    cycle_end: 'e',
+  }
 }

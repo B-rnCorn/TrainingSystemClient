@@ -11,7 +11,7 @@
 
 <div *ngIf="roles.includes('ROLE_STUDENT')">
   <div  *ngFor="let task of studentTasks" class="container bcontent">
-    <div class="card" style="width: 650px;">
+    <div class="card" style="width: 650px;" (click)="startSolution(task.taskDto.id)">
       <div class="row no-gutters">
         <div class="col-sm-9">
           <div class="content">

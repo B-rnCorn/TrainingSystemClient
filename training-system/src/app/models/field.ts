@@ -94,7 +94,7 @@ export class Field {
       this._columns.push(column);
     }
   }
-
+  /*Установка значения ячейки*/
   public setNewCellType(columnId: number, cellId: number, newCellType: string){
     this.columns[columnId].setNewCellType(cellId,newCellType);
   }

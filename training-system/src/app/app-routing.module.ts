@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: CONSTANTS.TABS.marks, component: MarksComponent },
   { path: CONSTANTS.TABS.journal, component: JournalComponent },
   { path: CONSTANTS.TABS.tasks + '/:id', component: TasksComponent},
+  { path: CONSTANTS.TABS.tasks + '/:id' + '/:action', component: TasksComponent},
   { path: CONSTANTS.TABS.tasks, component: TasksComponent},
   { path: '', component: RegisterComponent},
 ];

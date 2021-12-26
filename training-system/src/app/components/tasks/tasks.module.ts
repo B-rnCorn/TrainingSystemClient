@@ -17,6 +17,9 @@ import {MatSliderModule} from "@angular/material/slider";
 import { TaskViewComponent } from './task-view/task-view.component';
 import {RouterModule} from "@angular/router";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {DragulaModule} from "ng2-dragula";
+import { CommandComponent } from './commands/command/command.component';
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -28,7 +31,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     FieldCellComponent,
     FieldItemsListComponent,
     TaskViewComponent,
-    TaskViewComponent
+    TaskViewComponent,
+    CommandComponent
   ],
     imports: [
         CommonModule,
@@ -41,7 +45,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatIconModule,
         MatSliderModule,
         RouterModule,
-        MatTooltipModule
+        MatTooltipModule,
+        DragulaModule,
+        MatSelectModule
     ],
   exports: [
     TasksComponent,
