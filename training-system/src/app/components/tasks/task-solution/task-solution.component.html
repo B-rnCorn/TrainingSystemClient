@@ -1,16 +1,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<p>task-solution works!</p>
-<div class="task-part">
-  <h2>КОМАНДЫ</h2>
+<div class="task-part" style="margin-left: 50px">
+  <br>
+  <h2>Список команд</h2>
   <div class="command-list_source" dragula="COPYABLE" id="left">
-    <div class="command-list__item" *ngFor="let item of todo" draggable="true"
+    <div class="command-list__item " style="height: 50px" *ngFor="let item of todo" draggable="true"
     >
-      <div *ngIf="item === 'ВПЕРЕД' || item === 'НАЗАД'" style="background-color: dodgerblue">{{item}}</div>
-      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'"
-           style="background-color: limegreen">{{item}}</div>
-      <div *ngIf="item === 'ПРЫЖОК'" style="background-color: blueviolet">{{item}}</div>
-      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange" class="for-start">{{item}}
+      <div *ngIf="item === 'Вперед' || item === 'Назад'" style="background-color: #54c4c7; height: 100%;font-weight: bolder;">{{item}}</div>
+      <div *ngIf="item === 'Поворот налево' || item === 'Поворот направо'"
+           style="background-color: #56c755; height: 100%; font-weight: bolder;">{{item}}</div>
+      <div *ngIf="item === 'Прыжок'" style="background-color: #b571c7; height: 100%; font-weight: bolder; ">{{item}}</div>
+      <div *ngIf="item === 'Цикл'" style="background-color: #c7783f; height: 100%" class="for-start">{{item}}
         <input type="number" min="1" max="16" placeholder="i">
       </div>
     </div>
@@ -18,31 +18,33 @@
 </div>
 
 <div class="task-part">
-  <h2>СКРИПТ</h2>
+  <h2>Ваш алгоритм</h2>
   <div class="command-list_target"
        dragula="COPYABLE"
        id="right"
        style="width: 250px;height: 500px; background-color: #cccccc;">
 
   </div>
+
   <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;">
+          style="width: 250px; margin-top: 5px">
     Очистить
     <mat-icon>delete</mat-icon>
   </button>
   <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;">
+          style="width: 250px; margin-top: 5px">
     Сохранить
     <mat-icon>save</mat-icon>
   </button>
   <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;">
+          style="width: 250px; margin-top: 5px">
     Отправить
     <mat-icon>share</mat-icon>
   </button>
 </div>
 <div class="field-container">
-  <h2>ИГРОВОЕ ПОЛЕ</h2>
+  <h2>{{task.title}}</h2>
+  <p>{{task.description}}</p>
   <div class="field-wrap">
     <div class="field-row" *ngFor="let column of field.columns; index as i">
       <div class="field-col" *ngFor="let cell of column.cells; index as j"
@@ -59,8 +61,10 @@
     </div>
   </div>
   <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;">
+          style="width: 250px;" (click)="parseCommandsList()">
     Воспроизвести
     <mat-icon>play_arrow</mat-icon>
   </button>
+  <p>Бананов на руках: {{playMonkey.bananasCounter}}</p>
+  <p>Отнесла в корзину: {{playMonkey.harvestedBananas}}</p>
 </div>

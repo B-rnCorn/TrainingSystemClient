@@ -96,7 +96,7 @@ export class Field {
   }
   /*Установка значения ячейки*/
   public setNewCellType(columnId: number, cellId: number, newCellType: string){
-    this.columns[columnId].setNewCellType(cellId,newCellType);
+    this.columns[columnId].setNewCellType(cellId, newCellType);
   }
 
   //todo: Resize
