@@ -39,4 +39,14 @@ export class CONSTANTS{
     cycle_start: 's',
     cycle_end: 'e',
   }
+
+  static COMMAND_FULL_TYPES = {
+    forward: 'Вперед',
+    backward: 'Назад',
+    turn_right: 'Поворот направо',
+    turn_left: 'Поворот налево',
+    jump: 'Прыжок',
+    cycle_start: 'Цикл',
+    cycle_end: 'Конец цикла',
+  }
 }

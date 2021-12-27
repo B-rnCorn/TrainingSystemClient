@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61738cd1-2fe5-4622-9c7a-0edc4f3a72e6" name="Default Changelist" comment="added play monkey">
-      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/constants/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/constants/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +69,7 @@
       <workItem from="1639512481775" duration="1079000" />
       <workItem from="1639546169464" duration="283000" />
       <workItem from="1640518425875" duration="28664000" />
-      <workItem from="1640618030880" duration="22064000" />
+      <workItem from="1640618030880" duration="22420000" />
     </task>
     <task id="LOCAL-00001" summary="added task-view">
       <created>1639248131891</created>
@@ -113,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640642024612</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added play monkey">
+      <created>1640642411324</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1640642411324</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

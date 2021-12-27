@@ -23,10 +23,10 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   public matrix = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]];
 
-  public todo = ['Вперед', 'Назад', 'Поворот налево', 'Поворот направо', 'Прыжок', 'Цикл'];
+  public todo = [CONSTANTS.COMMAND_FULL_TYPES.forward, CONSTANTS.COMMAND_FULL_TYPES.backward, CONSTANTS.COMMAND_FULL_TYPES.turn_left, CONSTANTS.COMMAND_FULL_TYPES.turn_right, CONSTANTS.COMMAND_FULL_TYPES.jump, CONSTANTS.COMMAND_FULL_TYPES.cycle_start];
   public iterationsList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
-  public done = ['Цикл'];
+  public done = [CONSTANTS.COMMAND_FULL_TYPES.cycle_start];
 
 
   /**/
@@ -121,10 +121,10 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
       for (let i = 0; i < position; i++) {
         const node = listEl?.childNodes[i];
         node?.childNodes.forEach(nod => {
-          if (nod.textContent?.trim() === 'Цикл') {
+          if (nod.textContent?.trim() === CONSTANTS.COMMAND_FULL_TYPES.cycle_start) {
             level++;
           }
-          if (nod.textContent?.trim() === 'Конец цикла') {
+          if (nod.textContent?.trim() === CONSTANTS.COMMAND_FULL_TYPES.cycle_end) {
             level--;
           }
         });
@@ -419,17 +419,17 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
 private detectCommand(command: string | null, node: Element): string
 {
   switch (command) {
-    case 'ВПЕРЕД':
+    case CONSTANTS.COMMAND_FULL_TYPES.forward:
       return CONSTANTS.COMMAND_TYPES.forward;
-    case 'НАЗАД':
+    case CONSTANTS.COMMAND_FULL_TYPES.backward:
       return CONSTANTS.COMMAND_TYPES.backward;
-    case 'ПОВОРОТ НАЛЕВО':
+    case CONSTANTS.COMMAND_FULL_TYPES.turn_left:
       return CONSTANTS.COMMAND_TYPES.turn_left;
-    case 'ПОВОРОТ НАПРАВО':
+    case CONSTANTS.COMMAND_FULL_TYPES.turn_right:
       return CONSTANTS.COMMAND_TYPES.turn_right;
-    case 'КОНЕЦ ЦИКЛА':
+    case CONSTANTS.COMMAND_FULL_TYPES.cycle_end:
       return CONSTANTS.COMMAND_TYPES.cycle_end;
-    case 'ПРЫЖОК':
+    case CONSTANTS.COMMAND_FULL_TYPES.jump:
       return CONSTANTS.COMMAND_TYPES.jump;
     default:
       // @ts-ignore
