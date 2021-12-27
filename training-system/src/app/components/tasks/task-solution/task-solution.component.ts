@@ -52,28 +52,6 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
               private dragulaService: DragulaService,
               public cdr: ChangeDetectorRef,
               public snackBar: MatSnackBar) {
-    this.subs.push(dragulaService.drop('COPYABLE')
-      .subscribe(({el}) => {
-        // @ts-ignore
-        const level = this.checkNesting(el?.parentElement, Array.from(el?.parentNode?.children).indexOf(el));
-        this.removeSpaceIfExist(el);
-        el.classList.add('space-' + level);
-        if (el?.firstElementChild?.className === 'for-start' && el?.parentElement?.id !== 'left') {
-          const newDiv = document.createElement('div');
-          newDiv.className = 'command-list__item space-' + level;
-          newDiv.style.marginLeft = 20 * level + 'px';
-          newDiv.style.marginBottom = '15px';
-          newDiv.style.backgroundColor = '#c7783f';
-          newDiv.draggable = true;
-          newDiv.innerHTML = '<div class="for-end" style="height: 50px">Конец цикла</div>';
-          // @ts-ignore
-          el?.parentElement?.insertBefore(newDiv, el.nextSibling);
-          cdr.detectChanges();
-        }
-        // this.parseCommandsList(el);
-        this.el = el;
-      })
-    );
     if (!dragulaService.find('COPYABLE')) {
       dragulaService.createGroup('COPYABLE', {
         removeOnSpill: true,
@@ -92,6 +70,29 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
         }
       });
     }
+    this.subs.push(this.dragulaService.drop('COPYABLE')
+      .subscribe(({el}) => {
+        // @ts-ignore
+        const level = this.checkNesting(el?.parentElement, Array.from(el?.parentNode?.children).indexOf(el));
+        this.removeSpaceIfExist(el);
+        el.classList.add('space-' + level);
+        console.log('el?.firstElementChild?.className',el,el?.firstElementChild, el?.firstElementChild?.className);
+        if (el?.firstElementChild?.className.includes('for-start') && el?.parentElement?.id !== 'left') {
+          const newDiv = document.createElement('div');
+          newDiv.className = 'command-list__item space-' + level;
+          newDiv.style.marginLeft = 20 * level + 'px';
+          newDiv.style.marginBottom = '15px';
+          newDiv.style.backgroundColor = '#c7783f';
+          newDiv.draggable = true;
+          newDiv.innerHTML = '<div class="for-end" style="height: 50px">Конец цикла</div>';
+          // @ts-ignore
+          el?.parentElement?.insertBefore(newDiv, el.nextSibling);
+          this.cdr.detectChanges();
+        }
+        // this.parseCommandsList(el);
+        this.el = el;
+      })
+    );
   }
 
   ngOnInit(): void {
