@@ -59,6 +59,10 @@ export class TaskViewComponent implements OnInit, OnDestroy{
     this.router.navigate(['tasks',id,'solution']);
   }
 
+  public startCheck(id: number){
+    this.router.navigate(['tasks',id,'check']);
+  }
+
   public getTaskByTeacher(): any {
     this.subs.push(this.taskService.getTaskByTeacher()
       .subscribe((data) => {

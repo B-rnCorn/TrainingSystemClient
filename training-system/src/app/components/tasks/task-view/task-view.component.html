@@ -32,7 +32,7 @@
 
 <div *ngIf="roles.includes('ROLE_TEACHER')">
 <div  *ngFor="let task of teacherTasks" class="container bcontent">
-  <div class="card" style="width: 650px;">
+  <div class="card" style="width: 650px;" (click)="startCheck(task.id)">
     <div class="row no-gutters">
       <div class="col-sm-8">
         <div class="content">

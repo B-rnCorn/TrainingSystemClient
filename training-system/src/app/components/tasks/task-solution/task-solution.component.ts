@@ -63,7 +63,7 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
           newDiv.className = 'command-list__item space-' + level;
           newDiv.style.marginLeft = 20 * level + 'px';
           newDiv.style.marginBottom = '15px';
-          newDiv.style.backgroundColor = 'darkorange';
+          newDiv.style.backgroundColor = '#c7783f';
           newDiv.draggable = true;
           newDiv.innerHTML = '<div class="for-end" style="height: 50px">Конец цикла</div>';
           // @ts-ignore
