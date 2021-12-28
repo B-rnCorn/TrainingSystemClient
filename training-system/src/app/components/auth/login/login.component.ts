@@ -11,6 +11,8 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DialogComponent, DialogData} from "../../dialog/add-delete-students-dialog/dialog.component";
+import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit {
   private user: any;
   private loggedUser: any;
 
-  constructor(private authService: AuthService, private tokenService: TokenService, private router: Router, public dialog: MatDialog) {
+  constructor(private authService: AuthService, private tokenService: TokenService,
+              private router: Router, public dialog: MatDialog, public snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -60,10 +63,16 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['task-view']);
       },
         error => {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: 'Отсутствует соединение с сервером',
+            });
+          } else {
           this.message = 'Ошибка: Проверьте введенные данные';
           subscription.unsubscribe();
           this.openDialog({message: this.message});
-        })
+        }});
     }
   }
   //TODO:  в отдельный файл

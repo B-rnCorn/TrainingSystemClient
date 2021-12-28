@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61738cd1-2fe5-4622-9c7a-0edc4f3a72e6" name="Default Changelist" comment="added play monkey">
-      <change beforePath="$PROJECT_DIR$/training-system/src/app/constants/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/constants/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/auth/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/auth/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/auth/register/register.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/journal/journal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/journal/journal.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.less" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.less" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +74,8 @@
       <workItem from="1639512481775" duration="1079000" />
       <workItem from="1639546169464" duration="283000" />
       <workItem from="1640518425875" duration="28664000" />
-      <workItem from="1640618030880" duration="22420000" />
+      <workItem from="1640618030880" duration="24513000" />
+      <workItem from="1640701041907" duration="6014000" />
     </task>
     <task id="LOCAL-00001" summary="added task-view">
       <created>1639248131891</created>
@@ -120,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640642411324</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added play monkey">
+      <created>1640642964949</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1640642964949</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

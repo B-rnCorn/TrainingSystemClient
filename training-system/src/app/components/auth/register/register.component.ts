@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['login']);
         },
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',

@@ -6,11 +6,11 @@
   <div class="command-list_source" dragula="COPYABLE" id="left">
     <div class="command-list__item " style="height: 50px" *ngFor="let item of todo" draggable="true"
     >
-      <div *ngIf="item === 'Вперед' || item === 'Назад'" style="background-color: #54c4c7; height: 100%;font-weight: bolder;">{{item}}</div>
+      <div *ngIf="item === 'Вперед' || item === 'Назад'" style="background-color: #0299ea; height: 100%;font-weight: bolder;">{{item}}</div>
       <div *ngIf="item === 'Поворот налево' || item === 'Поворот направо'"
-           style="background-color: #56c755; height: 100%; font-weight: bolder;">{{item}}</div>
+           style="background: #00B74A; height: 100%; font-weight: bolder;">{{item}}</div>
       <div *ngIf="item === 'Прыжок'" style="background-color: #b571c7; height: 100%; font-weight: bolder; ">{{item}}</div>
-      <div *ngIf="item === 'Цикл'" style="background-color: #c7783f; height: 100%" class="for-start">{{item}}
+      <div *ngIf="item === 'Цикл'" style="background-color: orange; height: 100%; font-weight: bolder;" class="for-start">{{item}}
         <input type="number" min="1" max="16" placeholder="i">
       </div>
     </div>
@@ -61,12 +61,20 @@
         </app-field-cell>
       </div>
     </div>
+    <div class="container">
+      <div class="column" style="width: 200px; margin-left: 20px">
+        <div class = "row" style="font-weight: bolder">Взято бананов: {{playMonkey.bananasCounter}}</div>
+        <div class = "row" style="font-weight: bolder">Собрано бананов: {{playMonkey.harvestedBananas}}</div>
+    </div>
   </div>
-  <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;" (click)="parseCommandsList()">
+<!--    <div>-->
+<!--    <p>Бананов на руках: {{playMonkey.bananasCounter}}</p><br>-->
+<!--    <p>Отнесла в корзину: {{playMonkey.harvestedBananas}}</p><br>-->
+<!--    </div>-->
+  </div>
+  <button mat-button  class="example-icon favorite-icon white-background "
+          style="width: 250px; margin-top: 10px; margin-left: 185px; color: white; background: #00B74A" (click)="parseCommandsList()">
     Воспроизвести
-    <mat-icon>play_arrow</mat-icon>
+    <mat-icon class="white-icon">play_arrow</mat-icon>
   </button>
-  <p>Бананов на руках: {{playMonkey.bananasCounter}}</p>
-  <p>Отнесла в корзину: {{playMonkey.harvestedBananas}}</p>
 </div>
