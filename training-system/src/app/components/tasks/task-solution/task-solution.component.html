@@ -67,21 +67,18 @@
       <div class="column" style="width: 200px; margin-left: 20px">
         <div class = "row" style="font-weight: bolder">Взято бананов: {{playMonkey.bananasCounter}}</div>
         <div class = "row" style="font-weight: bolder">Собрано бананов: {{playMonkey.harvestedBananas}}</div>
+      </div>
     </div>
+
+    <!--    <div>-->
+    <!--    <p>Бананов на руках: {{playMonkey.bananasCounter}}</p><br>-->
+    <!--    <p>Отнесла в корзину: {{playMonkey.harvestedBananas}}</p><br>-->
+    <!--    </div>-->
   </div>
 
-<!--    <div>-->
-<!--    <p>Бананов на руках: {{playMonkey.bananasCounter}}</p><br>-->
-<!--    <p>Отнесла в корзину: {{playMonkey.harvestedBananas}}</p><br>-->
-<!--    </div>-->
-  </div>
-  <button mat-button  class="example-icon favorite-icon white-background "
-          style="width: 250px; margin-top: 10px; margin-left: 185px; color: white; background: #00B74A" (click)="parseCommandsList()">
-
-  <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;" (click)="playCommands()">
-
-    Воспроизвести
-    <mat-icon class="white-icon">play_arrow</mat-icon>
-  </button>
+    <button mat-button  class="example-icon favorite-icon white-background"
+            style="width: 250px; margin-top: 10px; margin-left: 185px; color: white; background: #00B74A" (click)="playCommands()">
+      Воспроизвести
+      <mat-icon class="white-icon">play_arrow</mat-icon>
+    </button>
 </div>
