@@ -48,10 +48,15 @@ export class JournalComponent implements OnInit {
         });
       },
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',
+            });
+          } else {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: error.error.message,
             });
           }
         });
@@ -72,10 +77,15 @@ export class JournalComponent implements OnInit {
         this.getAllStudents();
       },
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',
+            });
+          } else {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: error.error.message,
             });
           }
         });
@@ -85,11 +95,16 @@ export class JournalComponent implements OnInit {
     this.userService.getStudentsInGroup()
       .subscribe((data) => this.studentsInGroup = data,
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',
             });
+          } else {
+              this.snackBar.openFromComponent(StudentSnackBarComponent, {
+                duration: 2000,
+                data: error.error.message,
+              });
           }
         });
   }
@@ -97,10 +112,15 @@ export class JournalComponent implements OnInit {
     this.userService.getAllStudents()
       .subscribe((data) => this.allStudents = data,
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',
+            });
+          } else {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: error.error.message,
             });
           }
         });
@@ -113,15 +133,19 @@ export class JournalComponent implements OnInit {
           duration: 1500,
           data: this.message,
         });
-        // this.openAddOrDeleteDialog({message: this.message});
         this.getUserInGroup();
         this.getAllStudents();
       },
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',
+            });
+          } else {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: error.error.message,
             });
           }
         });
@@ -137,10 +161,15 @@ export class JournalComponent implements OnInit {
         this.openAllStatsDialog({fi: this.fi, marks: this.marks});
       },
         error => {
-          if (error.status !== 400) {
+          if (error.status === 'ERR_CONNECTION_REFUSED') {
             this.snackBar.openFromComponent(StudentSnackBarComponent, {
               duration: 2000,
               data: 'Отсутствует соединение с сервером',
+            });
+          } else {
+            this.snackBar.openFromComponent(StudentSnackBarComponent, {
+              duration: 2000,
+              data: error.error.message,
             });
           }
         });
