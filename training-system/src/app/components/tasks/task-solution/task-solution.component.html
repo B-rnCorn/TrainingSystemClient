@@ -29,6 +29,7 @@
   </div>
 
   <button mat-button  class="example-icon favorite-icon white-background"
+          (click)="clearList()"
           style="width: 250px; margin-top: 5px">
     Очистить
     <mat-icon>delete</mat-icon>
@@ -40,6 +41,8 @@
     <mat-icon>save</mat-icon>
   </button>
   <button mat-button  class="example-icon favorite-icon white-background"
+          (click)="publishSolution()"
+          [disabled]="!isSend"
           style="width: 250px; margin-top: 5px">
     Отправить
     <mat-icon>share</mat-icon>

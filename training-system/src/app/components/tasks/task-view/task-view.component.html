@@ -11,7 +11,7 @@
 
 <div *ngIf="roles.includes('ROLE_STUDENT')">
   <div  *ngFor="let task of studentTasks" class="container bcontent">
-    <div class="card" style="width: 650px;" (click)="startSolution(task.taskDto.id)">
+    <div class="card" style="width: 650px;" (click)="startSolution(task)">
       <div class="row no-gutters">
         <div class="col-sm-9">
           <div class="content">
@@ -22,7 +22,9 @@
         </div>
         <div class="col-sm-3">
           <div class="card-body">
-            <p class="task_st" *ngIf="task.solutionDto">Решено<br>{{task.solutionDto.date}}</p> <br>
+            <p class="task_st" *ngIf="task.solutionDto;else content">Решено<br>{{task.solutionDto.date}}</p>
+            <ng-template #content>Не решено</ng-template>
+            <p class="task_st" *ngIf="task.solutionDto && task.solutionDto.isSend">Отправлено</p>
           </div>
         </div>
       </div>

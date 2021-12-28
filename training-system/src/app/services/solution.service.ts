@@ -32,4 +32,9 @@ export class SolutionService {
     return this.http.post(this.baseUrl + '/update', {id: solutionId, algorithm: algorithm, isSend: false})
   }
 
+  public publishSolution(solutionId: number, algorithm: string): Observable<any>{
+    console.log('SOLUTION_ID',solutionId);
+    return this.http.post(this.baseUrl + '/update', {id: solutionId, algorithm: algorithm, isSend: true})
+  }
+
 }

@@ -11,6 +11,7 @@ import {PlayMonkey} from '../../../models/playMonkey';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
 import {SolutionService} from "../../../services/solution.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-task-solution',
@@ -50,7 +51,8 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   public playMonkey: PlayMonkey = new PlayMonkey();
   public isSend: boolean = false;
   private solutionId: number = -1;
-
+  public end: boolean;
+  public isPlay: boolean = false;
   /**/
 
   constructor(private taskService: TaskService,
@@ -58,7 +60,8 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
               private dragulaService: DragulaService,
               private solutionService: SolutionService,
               public cdr: ChangeDetectorRef,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              private router: Router) {
     if (!dragulaService.find('COPYABLE')) {
       dragulaService.createGroup('COPYABLE', {
         removeOnSpill: true,
@@ -89,7 +92,7 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
           newDiv.className = 'command-list__item space-' + level;
           newDiv.style.marginLeft = 20 * level + 'px';
           newDiv.style.marginBottom = '15px';
-          newDiv.style.backgroundColor = '#c7783f';
+          newDiv.style.backgroundColor = 'orange';
           newDiv.draggable = true;
           newDiv.innerHTML = '<div class="for-end" style="height: 50px">Конец цикла</div>';
           // @ts-ignore
@@ -182,6 +185,29 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   public playCommands() {
     this.parseCommandsList();
     let scriptCopy = JSON.parse(JSON.stringify(this.script));
+    let counter = 0;
+    for (let i = 0; i < scriptCopy.length; i++) {
+      if (scriptCopy.charAt(i) === 'e') {
+        counter--;
+      }
+      if (scriptCopy.charAt(i) === 's') {
+        counter++;
+      }
+      if (counter < 0) {
+        this.snackBar.openFromComponent(StudentSnackBarComponent, {
+          duration: 1500,
+          data: 'В вашем алгоритме ошибка!',
+        });
+        return;
+      }
+    }
+    if (counter !== 0) {
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: 'В вашем алгоритме ошибка!',
+      });
+      return;
+    }
     console.log(scriptCopy, this.script);
     // @ts-ignore
     const endScript = this.parseToEndScript(scriptCopy);
@@ -315,41 +341,33 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
       case 'j': {
         if (this.playMonkey.rotation === 'top') {
           if (this.playMonkey.cell - 2 < this.playMonkey.minIndex || this.playMonkey.cell - 1 < this.playMonkey.minIndex) {
-            console.log('хдыщ0');
             return false;
           }
           if (this.field.columns[this.playMonkey.column].cells[this.playMonkey.cell - 1].type === CONSTANTS.FIELD_TYPES.liana) {
-            console.log('хдыщ1');
             return this.move(this.playMonkey.column, this.playMonkey.cell - 2);
           }
         }
         if (this.playMonkey.rotation === 'down') {
           if (this.playMonkey.cell + 2 > this.playMonkey.maxIndex || this.playMonkey.cell + 1 > this.playMonkey.maxIndex) {
-            console.log('хдыщ7');
             return false;
           }
           if (this.field.columns[this.playMonkey.column].cells[this.playMonkey.cell + 1].type === CONSTANTS.FIELD_TYPES.liana) {
-            console.log('хдыщ8');
             return this.move(this.playMonkey.column, this.playMonkey.cell + 2);
           }
         }
         if (this.playMonkey.rotation === 'left') {
           if (this.playMonkey.column + 2 > this.playMonkey.maxIndex || this.playMonkey.column + 1 > this.playMonkey.maxIndex) {
-            console.log('хдыщ3');
             return false;
           }
           if (this.field.columns[this.playMonkey.column + 1].cells[this.playMonkey.cell].type === CONSTANTS.FIELD_TYPES.liana) {
-            console.log('хдыщ2');
             return this.move(this.playMonkey.column + 2, this.playMonkey.cell);
           }
         }
         if (this.playMonkey.rotation === 'right') {
           if (this.playMonkey.column - 2 < this.playMonkey.minIndex || this.playMonkey.column - 1 < this.playMonkey.minIndex) {
-            console.log('хдыщ4');
             return false;
           }
           if (this.field.columns[this.playMonkey.column - 1].cells[this.playMonkey.cell].type === CONSTANTS.FIELD_TYPES.liana) {
-            console.log('хдыщ5');
             return this.move(this.playMonkey.column - 2, this.playMonkey.cell);
           }
         }
@@ -358,12 +376,18 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
     }
     return false;
   }
+  public clearList(){
+    while (this.commandsList.nativeElement.firstChild){
+      this.commandsList.nativeElement.removeChild(this.commandsList.nativeElement.firstChild);
+    }
+  }
 
   public sleep(ms: number): any {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   async play(script: string): Promise<any> {
+    this.end = true;
     this.playMonkey.rotation = 'down';
     this.playMonkey.maxIndex = this.dimension - 1;
     this.returnField = this.utilsService.mapToField(this.task.map);
@@ -388,6 +412,7 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
           duration: 1500,
           data: 'Ошибка!',
         });
+        this.end = false;
         break;
       }
     }
@@ -454,12 +479,20 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   * Сохраняет решение, если его еще не было или обновляет, если уже имеется*/
   public saveSolution() {
     this.parseCommandsList();
+    if (this.script.length === 0) {
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: 'Добавьте команду в алгоритм!',
+      });
+      return;
+    }
     if (!this.isSend) {
       this.subs.push(this.solutionService.saveSolution(this.task.id, this.script).subscribe(res => {
         this.snackBar.openFromComponent(StudentSnackBarComponent, {
           duration: 1500,
           data: res.message,
         });
+        this.router.navigate(['task-view']);
       }));
     } else {
       this.subs.push(this.solutionService.updateSolution(this.solutionId, this.script).subscribe(res => {
@@ -467,8 +500,30 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
           duration: 1500,
           data: res.message,
         });
+        this.router.navigate(['task-view']);
       }));
     }
+  }
+
+  public publishSolution() {
+    console.log('я тут');
+    this.playCommands();
+    console.log('теперь тут');
+    if (!this.end) {
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: 'В решении есть ошибка!',
+      });
+      return;
+    }
+    this.subs.push(this.solutionService.publishSolution(this.solutionId, this.script).subscribe(res => {
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: 'Решение отправлено учителю',
+      });
+      this.router.navigate(['task-view']);
+    }));
+
   }
 
   //---------------Загрузка уже имеющегося решения------------------//
