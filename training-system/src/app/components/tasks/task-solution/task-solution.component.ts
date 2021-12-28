@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TaskStudentDto} from '../../../models/taskStudentdto';
 import {TaskService} from '../../../services/task.service';
 import {Subscription} from 'rxjs';
@@ -10,6 +10,7 @@ import {CONSTANTS} from '../../../constants/utils';
 import {PlayMonkey} from '../../../models/playMonkey';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
+import {SolutionService} from "../../../services/solution.service";
 
 @Component({
   selector: 'app-task-solution',
@@ -33,6 +34,9 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   @Input()
   public currentTaskId: number;
 
+  @ViewChild('commandsList')
+  private commandsList: ElementRef;
+
   // @ts-ignore
   public field: Field = new Field([]);
   public returnField: Field = new Field([]);
@@ -44,12 +48,15 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   private endScript: string;
   public task: TaskDto;
   public playMonkey: PlayMonkey = new PlayMonkey();
+  public isSend: boolean = false;
+  private solutionId: number = -1;
 
   /**/
 
   constructor(private taskService: TaskService,
               private utilsService: UtilsService,
               private dragulaService: DragulaService,
+              private solutionService: SolutionService,
               public cdr: ChangeDetectorRef,
               public snackBar: MatSnackBar) {
     if (!dragulaService.find('COPYABLE')) {
@@ -103,6 +110,7 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
         this.task = this.studentTasks.find(task => task.taskDto.id === this.currentTaskId).taskDto;
         this.field = this.utilsService.mapToField(this.task.map);
         this.dimension = Math.sqrt(this.task.map.length);
+        this.getSolution();
         this.cdr.detectChanges();
       }));
   }
@@ -162,14 +170,21 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
   //   this.parseToEndScript(this.script);
   // }
 
-  public parseCommandsList() {
+  private parseCommandsList() {
     this.script = '';
     // @ts-ignore
-    Array.from(this.el?.parentElement?.children).forEach(node => {
+    Array.from(this.commandsList.nativeElement.children).forEach(node => {
+      // @ts-ignore
       this.script += this.detectCommand(node.textContent, node);
     });
-    console.log(this.script);
-    const endScript = this.parseToEndScript(this.script);
+  }
+
+  public playCommands() {
+    this.parseCommandsList();
+    let scriptCopy = JSON.parse(JSON.stringify(this.script));
+    console.log(scriptCopy, this.script);
+    // @ts-ignore
+    const endScript = this.parseToEndScript(scriptCopy);
     this.play(endScript);
 
   }
@@ -222,7 +237,7 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
           if (this.playMonkey.cell - 1 < this.playMonkey.minIndex) {
             return false;
           }
-          return this.move(this.playMonkey.column, this.playMonkey.cell - 1 );
+          return this.move(this.playMonkey.column, this.playMonkey.cell - 1);
         }
         if (this.playMonkey.rotation === 'left') {
           if (this.playMonkey.column + 1 > this.playMonkey.maxIndex) {
@@ -243,7 +258,7 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
           if (this.playMonkey.cell - 1 < this.playMonkey.minIndex) {
             return false;
           }
-          return this.move(this.playMonkey.column, this.playMonkey.cell - 1 );
+          return this.move(this.playMonkey.column, this.playMonkey.cell - 1);
         }
         if (this.playMonkey.rotation === 'top') {
           if (this.playMonkey.cell + 1 > this.playMonkey.maxIndex) {
@@ -269,16 +284,13 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
         if (this.playMonkey.rotation === 'down') {
           this.playMonkey.rotation = 'left';
           return true;
-        }
-        else if (this.playMonkey.rotation === 'top'){
+        } else if (this.playMonkey.rotation === 'top') {
           this.playMonkey.rotation = 'right';
           return true;
-        }
-        else if (this.playMonkey.rotation === 'left'){
+        } else if (this.playMonkey.rotation === 'left') {
           this.playMonkey.rotation = 'top';
           return true;
-        }
-        else if (this.playMonkey.rotation === 'right'){
+        } else if (this.playMonkey.rotation === 'right') {
           this.playMonkey.rotation = 'down';
           return true;
         }
@@ -288,16 +300,13 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
         if (this.playMonkey.rotation === 'down') {
           this.playMonkey.rotation = 'right';
           return true;
-        }
-        else if (this.playMonkey.rotation === 'top'){
+        } else if (this.playMonkey.rotation === 'top') {
           this.playMonkey.rotation = 'left';
           return true;
-        }
-        else if (this.playMonkey.rotation === 'left'){
+        } else if (this.playMonkey.rotation === 'left') {
           this.playMonkey.rotation = 'down';
           return true;
-        }
-        else if (this.playMonkey.rotation === 'right'){
+        } else if (this.playMonkey.rotation === 'right') {
           this.playMonkey.rotation = 'top';
           return true;
         }
@@ -417,29 +426,158 @@ export class TaskSolutionComponent implements OnInit, OnDestroy {
     return script;
   }
 
-private detectCommand(command: string | null, node: Element): string
-{
-  switch (command) {
-    case CONSTANTS.COMMAND_FULL_TYPES.forward:
-      return CONSTANTS.COMMAND_TYPES.forward;
-    case CONSTANTS.COMMAND_FULL_TYPES.backward:
-      return CONSTANTS.COMMAND_TYPES.backward;
-    case CONSTANTS.COMMAND_FULL_TYPES.turn_left:
-      return CONSTANTS.COMMAND_TYPES.turn_left;
-    case CONSTANTS.COMMAND_FULL_TYPES.turn_right:
-      return CONSTANTS.COMMAND_TYPES.turn_right;
-    case CONSTANTS.COMMAND_FULL_TYPES.cycle_end:
-      return CONSTANTS.COMMAND_TYPES.cycle_end;
-    case CONSTANTS.COMMAND_FULL_TYPES.jump:
-      return CONSTANTS.COMMAND_TYPES.jump;
-    default:
-      // @ts-ignore
-      let value = node?.children[0].childNodes[1].value;
-      if (value.length === 1) {
-        value = '0' + value;
-      }
-      return CONSTANTS.COMMAND_TYPES.cycle_start + value;
+  private detectCommand(command: string | null, node: Element): string {
+    switch (command) {
+      case CONSTANTS.COMMAND_FULL_TYPES.forward:
+        return CONSTANTS.COMMAND_TYPES.forward;
+      case CONSTANTS.COMMAND_FULL_TYPES.backward:
+        return CONSTANTS.COMMAND_TYPES.backward;
+      case CONSTANTS.COMMAND_FULL_TYPES.turn_left:
+        return CONSTANTS.COMMAND_TYPES.turn_left;
+      case CONSTANTS.COMMAND_FULL_TYPES.turn_right:
+        return CONSTANTS.COMMAND_TYPES.turn_right;
+      case CONSTANTS.COMMAND_FULL_TYPES.cycle_end:
+        return CONSTANTS.COMMAND_TYPES.cycle_end;
+      case CONSTANTS.COMMAND_FULL_TYPES.jump:
+        return CONSTANTS.COMMAND_TYPES.jump;
+      default:
+        // @ts-ignore
+        let value = node?.children[0].childNodes[1].value;
+        if (value.length === 1) {
+          value = '0' + value;
+        }
+        return CONSTANTS.COMMAND_TYPES.cycle_start + value;
+    }
   }
-}
+
+  /*Сохранение решения
+  * Сохраняет решение, если его еще не было или обновляет, если уже имеется*/
+  public saveSolution() {
+    this.parseCommandsList();
+    if (!this.isSend) {
+      this.subs.push(this.solutionService.saveSolution(this.task.id, this.script).subscribe(res => {
+        this.snackBar.openFromComponent(StudentSnackBarComponent, {
+          duration: 1500,
+          data: res.message,
+        });
+      }));
+    } else {
+      this.subs.push(this.solutionService.updateSolution(this.solutionId, this.script).subscribe(res => {
+        this.snackBar.openFromComponent(StudentSnackBarComponent, {
+          duration: 1500,
+          data: res.message,
+        });
+      }));
+    }
+  }
+
+  //---------------Загрузка уже имеющегося решения------------------//
+
+  public parseScriptToCommands(script: string) {
+    let cleanScript = this.removeIterationsFromScript(script);
+    for (let i = 0; i < script.length; i++) {
+      let level, command, iterations = 0;
+      let newDiv = document.createElement("div");
+      level = this.checkNestedLevel(script, i);
+      newDiv.className = 'command-list__item space-' + level;
+      newDiv.style.height = '50px';
+      newDiv.style.fontWeight = 'bolder';
+      newDiv.style.marginLeft = 20 * level + 'px';
+      newDiv.style.marginBottom = '15px';
+      if (script[i] === 's') {
+        command = this.recognizeCommand('');
+        iterations = Number.parseInt(script[i + 1] + script[i + 2]);
+        newDiv.style.backgroundColor = this.getColorOFCommand(command);
+        newDiv.innerHTML = '<div class="for-end">' + command + '<input type="number" min="1" max="16" placeholder="i" value="' + iterations + '"></div>';
+        console.log(command);
+        i = i + 2;
+      } else {
+        command = this.recognizeCommand(script[i]);
+        newDiv.style.backgroundColor = this.getColorOFCommand(command);
+        newDiv.innerHTML = '<div>' + command + '</div>';
+        console.log(command);
+      }
+      this.commandsList.nativeElement.appendChild(newDiv);
+    }
+  }
+
+  private removeIterationsFromScript(script: string): string {
+    let cleanScript = '', commands = 'fbjlrse';
+    for (let i = 0; i < script.length; i++) {
+      if (commands.indexOf(script[i]) >= 0) {
+        cleanScript = cleanScript + script[i];
+      }
+    }
+    return cleanScript;
+  }
+
+  private checkNestedLevel(script: string, index: number): number {
+    let level = 0;
+    for (let i = 0; i <= index; i++) {
+      if (script[i - 2] === 's') {
+        console.log("LVLUP");
+        level = level + 1;
+      }
+      if (script[i] === 'e') {
+        console.log("LVLDOWN");
+        level = level - 1;
+      }
+      console.log('i  ', script[i], level, index);
+    }
+    return level;
+  }
+
+  private recognizeCommand(symbols: string): string {
+    switch (true) {
+      case symbols === 'f':
+        return CONSTANTS.COMMAND_FULL_TYPES.forward;
+      case symbols === 'b':
+        return CONSTANTS.COMMAND_FULL_TYPES.backward;
+      case symbols === 'l':
+        return CONSTANTS.COMMAND_FULL_TYPES.turn_left;
+      case symbols === 'r':
+        return CONSTANTS.COMMAND_FULL_TYPES.turn_right;
+      case symbols === 'j':
+        return CONSTANTS.COMMAND_FULL_TYPES.jump;
+      case symbols === 'e':
+        return CONSTANTS.COMMAND_FULL_TYPES.cycle_end;
+      default:
+        return CONSTANTS.COMMAND_FULL_TYPES.cycle_start + symbols;
+    }
+  }
+
+  private getColorOFCommand(command: string): string {
+    switch (command) {
+      case CONSTANTS.COMMAND_FULL_TYPES.forward:
+      case CONSTANTS.COMMAND_FULL_TYPES.backward:
+        return '#54c4c7';
+      case CONSTANTS.COMMAND_FULL_TYPES.turn_left:
+      case CONSTANTS.COMMAND_FULL_TYPES.turn_right:
+        return '#56c755'
+      case CONSTANTS.COMMAND_FULL_TYPES.jump:
+        return '#b571c7'
+      default:
+        return '#c7783f'
+    }
+  }
+
+  private getSolution() {
+    this.subs.push(this.solutionService.getAllStudentSolutions().subscribe(res => {
+      console.log('DEBUG 1', res);
+      // @ts-ignore
+      let solution = res.find(item => {
+        return item.task.id === this.task.id;
+      })
+      let algorithm = solution?.algorithm;
+      console.log('DEBUG 2', algorithm);
+      if (algorithm) {
+        this.isSend = true;
+        this.solutionId = solution.id;
+        console.log('solutionId',this.solutionId);
+        this.script = algorithm;
+        this.parseScriptToCommands(this.script);
+      }
+    }));
+  }
 
 }

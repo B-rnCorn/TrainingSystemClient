@@ -21,6 +21,7 @@
   <br>
   <h2>Ваш алгоритм</h2>
   <div class="command-list_target"
+       #commandsList
        dragula="COPYABLE"
        id="right"
        style="width: 250px;height: 500px; background-color: #cccccc; margin-top: 15px">
@@ -33,6 +34,7 @@
     <mat-icon>delete</mat-icon>
   </button>
   <button mat-button  class="example-icon favorite-icon white-background"
+          (click)="saveSolution()"
           style="width: 250px; margin-top: 5px">
     Сохранить
     <mat-icon>save</mat-icon>
@@ -63,7 +65,7 @@
     </div>
   </div>
   <button mat-button  class="example-icon favorite-icon white-background"
-          style="width: 250px;" (click)="parseCommandsList()">
+          style="width: 250px;" (click)="playCommands()">
     Воспроизвести
     <mat-icon>play_arrow</mat-icon>
   </button>

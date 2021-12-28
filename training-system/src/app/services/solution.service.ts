@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import {MessageResponse} from "../models/messageResponse";
+import {SolutionDto} from "../models/solutionDto";
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +22,14 @@ export class SolutionService {
   public getAllStudentSolutions(): Observable<any> {
     return this.http.get(this.studentSolutionsUrlForStudent);
   }
+
+  public saveSolution(taskId: number, algorithm: string): Observable<any> {
+    return this.http.post(this.baseUrl + '/save', {taskId: taskId, algorithm: algorithm, isSend: false});
+  }
+
+  public updateSolution(solutionId: number, algorithm: string): Observable<any>{
+    console.log('SOLUTION_ID',solutionId);
+    return this.http.post(this.baseUrl + '/update', {id: solutionId, algorithm: algorithm, isSend: false})
+  }
+
 }
