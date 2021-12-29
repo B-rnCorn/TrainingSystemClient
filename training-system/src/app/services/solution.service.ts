@@ -37,4 +37,19 @@ export class SolutionService {
     return this.http.post(this.baseUrl + '/update', {id: solutionId, algorithm: algorithm, isSend: true})
   }
 
+  public getSolutionsForTask(taskId: number): Observable<any> {
+    return this.http.get(this.studentSolutionsUrl + '/getSolution', { params: new HttpParams().append('taskId', String(taskId))});
+  }
+
+  public getStudentsForTask(taskId: number): Observable<any> {
+    return this.http.get(this.baseUrl + '/getUsers', { params: new HttpParams().append('taskId', String(taskId))});
+  }
+
+  public getStudentSolution(userId: number,taskId: number): Observable<any> {
+    return this.http.get(this.baseUrl + '/getStudentSol', { params: new HttpParams().append('userId', String(taskId)).append('taskId', String(taskId))});
+  }
+
+  public sendMark(solutionId: number,mark: number): Observable<any> {
+    return this.http.get(this.baseUrl + '/setMark', { params: new HttpParams().append('solutionId', String(solutionId)).append('mark', String(mark))});
+  }
 }

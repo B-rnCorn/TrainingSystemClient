@@ -34,11 +34,11 @@
 
 <div *ngIf="roles.includes('ROLE_TEACHER')">
 <div  *ngFor="let task of teacherTasks" class="container bcontent">
-  <div class="card" style="width: 650px;" (click)="startCheck(task.id)">
+  <div class="card" style="width: 650px;">
     <div class="row no-gutters">
       <div class="col-sm-8">
         <div class="content">
-          <p class="title">{{task.title}}<span class="date"> {{task.date}}</span><mat-icon *ngIf="task.isPublished" class="published">share</mat-icon></p>
+          <p class="title" (click)="startCheck(task.id)">{{task.title}}<span class="date"> {{task.date}}</span><mat-icon *ngIf="task.isPublished" class="published">share</mat-icon></p>
 <!--          <p>Автор: {{task.author.fio}}</p>-->
           <p>{{task.description}}</p>
         </div>

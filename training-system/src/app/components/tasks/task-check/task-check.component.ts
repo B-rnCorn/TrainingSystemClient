@@ -5,10 +5,15 @@ import {UtilsService} from "../../../services/utils.service";
 import {TaskService} from "../../../services/task.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TaskDto} from "../../../models/taskDto";
+import {SolutionService} from "../../../services/solution.service";
+import {SolutionDto} from "../../../models/solutionDto";
+import {StudentSnackBarComponent} from "../../snack-bar/student-snack-bar/student-snack-bar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 interface Student {
   id: number;
-  name: string;
+  username: string;
+  fio: string;
 }
 
 @Component({
@@ -27,15 +32,20 @@ export class TaskCheckComponent implements OnInit, OnDestroy {
   public dimension: number = 4;
   private subs: Subscription[] = [];
   public field: Field = new Field([]);
-  public students: Student[] = [{id:1, name:'Сергей'},{id:2, name:'Артем'},{id:3, name:'Ильдар'},];
+  public students: Student[] = [];
   public todo = ['ВПЕРЕД', 'НАЗАД', 'ПОВОРОТ НАЛЕВО', 'ПОВОРОТ НАПРАВО', 'ПРЫЖОК', 'ЦИКЛ'];
   private task: TaskDto;
+  private solution: SolutionDto;
+  private script: string = '';
+  private mark: number;
 
   constructor(public cdr: ChangeDetectorRef,
               private utilsService: UtilsService,
               private taskService: TaskService,
+              private solutionService: SolutionService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.subs.push(this.route.params.subscribe(params => {
@@ -45,6 +55,10 @@ export class TaskCheckComponent implements OnInit, OnDestroy {
         if (this.task) {
           this.field = this.utilsService.mapToField(this.task.map);
           this.dimension = Math.sqrt(this.task.map.length);
+          this.subs.push(this.solutionService.getStudentsForTask(this.task.id).subscribe(res => {
+            this.students = res;
+            console.log('RESPONSE',this.students);
+          }));
           this.cdr.detectChanges();
         }
       }));
@@ -55,8 +69,17 @@ export class TaskCheckComponent implements OnInit, OnDestroy {
     return this.dimension === size;
   }
 
+  public onChooseStudent(studentId: number){
+    console.log(studentId);
+    this.subs.push(this.solutionService.getStudentSolution(studentId, this.task.id).subscribe(res => {
+      this.solution = res;
+      this.script = this.solution.algorithm;
+      this.parseScriptToCommands();
+    }));
+  }
+
   public parseScriptToCommands(){
-    const script = 'fbjs11fls07rljere';
+    const script = this.script;
     for (let i = 0; i < script.length; i++){
       let level, command, iterations = 0;
       let newDiv = document.createElement("div");
@@ -83,14 +106,14 @@ export class TaskCheckComponent implements OnInit, OnDestroy {
 
   private  checkNestedLevel(script: string, index: number): number{
     let level = 0;
-    for (let i = 0; i <= index; i++){
-      if (script[i] === 's') {
-        level = level+1;
+    for (let i = 0; i <= index; i++) {
+      if (script[i - 2] === 's') {
+        level = level + 1;
       }
       if (script[i] === 'e') {
-        level = level-1;
+        level = level - 1;
       }
-      console.log('i  ',script[i], level);
+      console.log('i  ', script[i], level, index);
     }
     return level;
   }
@@ -127,6 +150,20 @@ export class TaskCheckComponent implements OnInit, OnDestroy {
       default:
         return 'darkorange'
     }
+  }
+
+  public setMark(mark: number){
+    this.mark = mark;
+  }
+
+  public onSendMark(){
+    this.subs.push(this.solutionService.sendMark(this.solution.id, this.mark).subscribe(res =>
+    {
+      this.snackBar.openFromComponent(StudentSnackBarComponent, {
+        duration: 1500,
+        data: 'Оценка выставлена!',
+      });
+    }));
   }
 
   ngOnDestroy(): void {

@@ -49,4 +49,11 @@ export class CONSTANTS{
     cycle_start: 'Цикл',
     cycle_end: 'Конец цикла',
   }
+
+  static DIRECTION = {
+    top: 'top',
+    bottom: 'down',
+    left: 'left',
+    right: 'right',
+  }
 }

@@ -2,22 +2,36 @@
   <mat-form-field appearance="fill">
     <mat-label>Ученик</mat-label>
     <mat-select>
-      <mat-option *ngFor="let student of students" [value]="student.id" (click)="parseScriptToCommands()">
-        {{student.name}}
+      <mat-option *ngFor="let student of students" [value]="student.id" (click)="onChooseStudent(student.id)">
+        {{student.fio}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <div class="command-list_source" #commandsList>
-    <!--<div class="command-list__item" *ngFor="let item of todo"
-    >
-      <div *ngIf="item === 'ВПЕРЕД' || item === 'НАЗАД'" style="background-color: dodgerblue">{{item}}</div>
-      <div *ngIf="item === 'ПОВОРОТ НАЛЕВО' || item === 'ПОВОРОТ НАПРАВО'"
-           style="background-color: limegreen">{{item}}</div>
-      <div *ngIf="item === 'ПРЫЖОК'" style="background-color: blueviolet">{{item}}</div>
-      <div *ngIf="item === 'ЦИКЛ'" style="background-color: darkorange" class="for-start">{{item}}
-        <input type="number" min="1" max="16" placeholder="i">
+  </div>
+  <div class="container-sm">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="container-sm">
+          <div class="row">
+            <button (click)="setMark(0)">0</button>
+            <button (click)="setMark(1)">1</button>
+            <button (click)="setMark(2)">2</button>
+            <button (click)="setMark(3)">3</button>
+            <button (click)="setMark(4)">4</button>
+            <button (click)="setMark(5)">5</button>
+          </div>
+        </div>
       </div>
-    </div>-->
+      <div class="col-sm-6">
+        <button mat-button  class="example-icon favorite-icon white-background"
+                (click)="onSendMark()"
+                style="width: 250px; margin-top: 10px; margin-left: 185px; color: white; background: #00B74A">
+          Оценить
+          <mat-icon class="white-icon">done_outline</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 <div class="field-container">
