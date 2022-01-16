@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61738cd1-2fe5-4622-9c7a-0edc4f3a72e6" name="Default Changelist" comment="added play monkey">
+    <list default="true" id="61738cd1-2fe5-4622-9c7a-0edc4f3a72e6" name="Default Changelist" comment=":)">
+      <change afterPath="$PROJECT_DIR$/training-system/src/assets/guide/help.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/training-system/src/assets/guide/user-guide1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/auth/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/auth/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/auth/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/journal/journal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/journal/journal.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/dialog/all-stats-dialog/all-stats.dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/dialog/all-stats-dialog/all-stats.dialog.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/dialog/info-dialog/info-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/dialog/info-dialog/info-dialog.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/dialog/info-dialog/info-dialog.component.less" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/dialog/info-dialog/info-dialog.component.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-check/task-check.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-check/task-check.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-check/task-check.component.less" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-check/task-check.component.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-check/task-check.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-check/task-check.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.less" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/components/tasks/task-solution/task-solution.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/app/services/solution.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/training-system/src/app/services/solution.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training-system/src/assets/guide/user-guide.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="snackbars" />
+        <entry key="$PROJECT_DIR$" value="smallfix" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,6 +64,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\learning_system\TrainingSystemClient\training-system\src\assets\guide" />
+      <recent name="C:\learning_system\TrainingSystemClient\training-system\src\assets" />
       <recent name="C:\learning_system\TrainingSystemClient\training-system\src\app\components\dialog\info-dialog" />
     </key>
   </component>
@@ -74,8 +83,7 @@
       <workItem from="1639512481775" duration="1079000" />
       <workItem from="1639546169464" duration="283000" />
       <workItem from="1640518425875" duration="28664000" />
-      <workItem from="1640618030880" duration="24513000" />
-      <workItem from="1640701041907" duration="6014000" />
+      <workItem from="1640618030880" duration="22420000" />
     </task>
     <task id="LOCAL-00001" summary="added task-view">
       <created>1639248131891</created>
@@ -126,14 +134,21 @@
       <option name="project" value="LOCAL" />
       <updated>1640642411324</updated>
     </task>
-    <task id="LOCAL-00008" summary="added play monkey">
-      <created>1640642964949</created>
+    <task id="LOCAL-00008" summary=":)">
+      <created>1640718623923</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1640642964949</updated>
+      <updated>1640718623923</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary=":)">
+      <created>1640730284759</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1640730284759</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,6 +169,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added task-view" />
     <MESSAGE value="added play monkey" />
-    <option name="LAST_COMMIT_MESSAGE" value="added play monkey" />
+    <MESSAGE value=":)" />
+    <option name="LAST_COMMIT_MESSAGE" value=":)" />
   </component>
 </project>

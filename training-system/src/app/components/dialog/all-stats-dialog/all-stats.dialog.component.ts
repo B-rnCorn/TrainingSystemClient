@@ -114,7 +114,7 @@ export class AllStatsDialogComponent {
     let scores = [];
     for (let i = 0; i < this.data.marks.length; i++) {
         let mas = this.data.marks[i];
-        let score = mas.reduce((a, b) => a + b, 0)/mas.length;
+        let score = Math.round((mas.reduce((a, b) => a + b, 0) / mas.length) * 10)/10;
         console.log(score);
         scores.push(score);
       }

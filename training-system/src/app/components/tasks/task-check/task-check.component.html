@@ -1,8 +1,8 @@
-<div class="task-part center-element">
-  <mat-form-field appearance="fill">
+<div class="task-part center-element" style="margin-left: 50px">
+  <mat-form-field style="width: 375px;" appearance="fill">
     <mat-label>Ученик</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let student of students" [value]="student.id" (click)="onChooseStudent(student.id)">
+    <mat-select style="width: 350px; font-size: 16px">
+      <mat-option style="width: 100%; font-size: 16px" *ngFor="let student of students" [value]="student.id" (click)="onChooseStudent(student.id)">
         {{student.fio}}
       </mat-option>
     </mat-select>
@@ -11,28 +11,28 @@
   </div>
   <div class="container-sm">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-6" >
         <div class="container-sm">
-          <div class="row">
-            <button (click)="setMark(0)">0</button>
-            <button (click)="setMark(1)">1</button>
-            <button (click)="setMark(2)">2</button>
-            <button (click)="setMark(3)">3</button>
-            <button (click)="setMark(4)">4</button>
-            <button (click)="setMark(5)">5</button>
+          <div class="row" style="margin-top: 50px">
+            <button style="width: 40px;height: 40px" [ngClass] ="{'true': flag0 ,'false':!flag0}" (click)="setMark(0)">0</button>
+            <button style="width: 40px;height: 40px" [ngClass] ="{'true': flag1 ,'false':!flag1}"(click)="setMark(1)">1</button>
+            <button style="width: 40px;height: 40px" [ngClass] ="{'true': flag2 ,'false':!flag2}" (click)="setMark(2)">2</button>
+            <button style="width: 40px;height: 40px" [ngClass] ="{'true': flag3 ,'false':!flag3}"(click)="setMark(3)">3</button>
+            <button style="width: 40px;height: 40px" [ngClass] ="{'true': flag4 ,'false':!flag4}"(click)="setMark(4)">4</button>
+            <button style="width: 40px;height: 40px" [ngClass] ="{'true': flag5 ,'false':!flag5}"(click)="setMark(5)">5</button>
           </div>
         </div>
       </div>
       <div class="col-sm-6">
-        <button mat-button  class="example-icon favorite-icon white-background"
-                (click)="onSendMark()"
-                style="width: 250px; margin-top: 10px; margin-left: 185px; color: white; background: #00B74A">
-          Оценить
-          <mat-icon class="white-icon">done_outline</mat-icon>
-        </button>
       </div>
     </div>
   </div>
+  <button mat-button  class="example-icon favorite-icon white-background"
+          (click)="onSendMark()"
+          style="width: 240px; margin-top: 10px; margin-left: 0px; color: white; background: #00B74A">
+    Оценить
+    <mat-icon class="white-icon">done_outline</mat-icon>
+  </button>
 </div>
 <div class="field-container">
   <div class="container">
@@ -81,6 +81,18 @@
           </app-field-cell>
         </div>
       </div>
+      <div class="container">
+        <div class="column" style="width: 200px; margin-left: 20px">
+          <div class = "row" style="font-weight: bolder">Взято бананов: {{playMonkey.bananasCounter}}</div>
+          <div class = "row" style="font-weight: bolder">Собрано бананов: {{playMonkey.harvestedBananas}}</div>
+        </div>
+      </div>
     </div>
   </div>
+  <button mat-button  class="example-icon favorite-icon white-background"
+          (click)="playCommands()"
+          style="width: 250px; margin-top: 10px; margin-left: 185px; color: white; background: #00B74A">
+    Воспроизвести
+    <mat-icon class="white-icon">done_outline</mat-icon>
+  </button>
 </div>

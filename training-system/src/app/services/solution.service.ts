@@ -46,7 +46,7 @@ export class SolutionService {
   }
 
   public getStudentSolution(userId: number,taskId: number): Observable<any> {
-    return this.http.get(this.baseUrl + '/getStudentSol', { params: new HttpParams().append('userId', String(taskId)).append('taskId', String(taskId))});
+    return this.http.get(this.baseUrl + '/getStudentSol', { params: new HttpParams().append('userId', String(userId)).append('taskId', String(taskId))});
   }
 
   public sendMark(solutionId: number,mark: number): Observable<any> {
